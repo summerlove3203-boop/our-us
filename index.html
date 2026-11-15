@@ -17,7 +17,7 @@
   --rose:#D88C9A;
   --rose-text:#B5596D;
   --lav:#C9B8E8;
-  --line:rgba(43,43,46,.1);
+  --line:rgba(43,43,46,.1cocoxj bxzb
   --fill:#F1ECE5;
   --spring:cubic-bezier(.34,1.56,.64,1);
   --ease:cubic-bezier(.22,1,.36,1);
@@ -335,8 +335,31 @@ textarea{min-height:120px;resize:vertical;line-height:1.7}
       <input id="authEmail" type="email" inputmode="email" autocomplete="username" autocapitalize="none" autocorrect="off" placeholder="example@email.com">
       <label for="authPw">비밀번호 (6자 이상)</label>
       <input id="authPw" type="password" autocomplete="current-password" placeholder="비밀번호">
-      <button class="primary" id="loginBtn" style="margin-top:4px">로그인</button>
-      <button class="auth-sub" id="signupBtn">처음이면 가입하기</button>
+      <button class="primary"
+
+  id="googleLoginBtn"
+
+  style="margin-top:4px">
+
+  Google 계정으로 로그인
+
+</button>
+
+<button class="auth-sub"
+
+  id="loginBtn">
+
+  이메일로 로그인
+
+</button>
+
+<button class="auth-sub"
+
+  id="signupBtn">
+
+  처음이면 가입하기
+
+</button>
     </div>
 
     <div id="pairSetup" class="hidden">
@@ -700,6 +723,10 @@ setTimeout(function(){
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import{
+GoogleAuthProvider,
+signInWithPopup,
+setPersistence,
+browserLocalPersistence,
  getAuth,onAuthStateChanged,signOut,setPersistence,browserLocalPersistence,
  createUserWithEmailAndPassword,signInWithEmailAndPassword
 }from'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
@@ -721,7 +748,25 @@ const firebaseConfig={
 
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app),db=getFirestore(app);
+const googleProvider =
+  new GoogleAuthProvider();
 
+$('googleLoginBtn').onclick = async () => {
+  try {
+    await setPersistence(
+      auth,
+      browserLocalPersistence
+    );
+
+    await signInWithPopup(
+      auth,
+      googleProvider
+    );
+
+  } catch (e) {
+    status('Google 로그인 오류: ' + authMsg(e));
+  }
+};
 let user=null,coupleId=null,isOwner=false,unsubs=[];
 let month=new Date(new Date().getFullYear(),new Date().getMonth(),1);
 let selectedDate=iso(new Date());
