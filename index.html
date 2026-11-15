@@ -1,42 +1,34 @@
-<!DOCTYPE html>
+l
+
+<!doctype html>
 
 <html lang="ko">
 
 <head>
 
-<meta charset="UTF-8">
+<meta charset="utf-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#faf8f7">
 
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 <meta name="apple-mobile-web-app-title" content="메모">
 
-<title>OUR:US</title>
+<title>메모</title>
 
 <style>
 
 :root{
 
-  --bg:#fff;
+  --bg:#faf8f7;--surface:#fff;--ink:#302b30;
 
-  --surface:#fff;
+  --muted:#969097;--pink:#c987a1;--pink2:#f4e5eb;
 
-  --ink:#29252a;
+  --lav:#eeeaf5;--line:#eee9e9;--green:#78988b;
 
-  --sub:#999199;
-
-  --pink:#d98da8;
-
-  --pink-light:#f9edf2;
-
-  --line:#eee9ec;
-
-  --purple:#a99aba;
-
-  --shadow:0 5px 24px rgba(50,30,40,.045);
+  --shadow:0 5px 24px rgba(56,39,48,.045);
 
 }
 
@@ -44,73 +36,45 @@
 
 body{
 
-  margin:0;
+  margin:0;background:var(--bg);color:var(--ink);
 
-  background:#faf9fa;
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
 
-  color:var(--ink);
-
-  font-family:-apple-system,BlinkMacSystemFont,
-
-  "Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+  -webkit-font-smoothing:antialiased;
 
 }
 
 button,input,textarea{font:inherit}
 
-button{cursor:pointer;border:0}
+button{cursor:pointer}
 
 .app{
 
-  max-width:520px;
+  max-width:520px;min-height:100vh;margin:auto;
 
-  min-height:100dvh;
-
-  margin:auto;
-
-  background:#fff;
-
-  padding:env(safe-area-inset-top) 22px
-
-  calc(88px + env(safe-area-inset-bottom));
+  padding:env(safe-area-inset-top) 21px calc(100px + env(safe-area-inset-bottom));
 
 }
 
 header{
 
-  height:62px;
-
-  display:flex;
-
-  align-items:center;
+  height:62px;display:flex;align-items:center;
 
   justify-content:space-between;
 
 }
 
-.brand{
-
-  font-size:20px;
-
-  font-weight:850;
-
-  letter-spacing:-.7px;
-
-}
+.brand{font-size:19px;font-weight:850;letter-spacing:-.8px}
 
 .brand span{color:var(--pink)}
 
-.icon-button{
+.iconbtn{
 
-  width:38px;height:38px;
+  width:39px;height:39px;border-radius:50%;
 
-  border-radius:50%;
+  background:#fff;border:1px solid var(--line);
 
-  background:#f8f6f7;
-
-  color:#777;
-
-  font-size:18px;
+  color:#625962;font-size:17px;
 
 }
 
@@ -118,555 +82,149 @@ header{
 
 .page.active{display:block}
 
-.page-heading{
+.home-top{
 
-  margin:20px 0 22px;
+  display:flex;justify-content:space-between;
 
-}
-
-.page-heading h1{
-
-  font-size:24px;
-
-  letter-spacing:-1px;
-
-  margin:0 0 6px;
+  align-items:center;margin:15px 0 20px;
 
 }
 
-.page-heading p{
+.greeting small{font-size:11px;color:var(--muted);letter-spacing:1.5px}
 
-  margin:0;
+.greeting h1{font-size:23px;letter-spacing:-1px;margin:7px 0 0}
 
-  color:var(--sub);
+.profile-dot{
 
-  font-size:13px;
+  width:43px;height:43px;border-radius:50%;
 
-}
+  background:var(--pink2);display:grid;place-items:center;
 
-.home-greeting{
-
-  margin:18px 0 25px;
+  color:#a66f86;font-size:19px;
 
 }
 
-.home-greeting small{
+.love-card{
 
-  color:var(--sub);
+  background:linear-gradient(120deg,#f4e6eb,#f1edf5);
 
-  font-size:12px;
+  border-radius:23px;padding:21px 22px;
 
-}
-
-.home-greeting h1{
-
-  font-size:25px;
-
-  letter-spacing:-1.2px;
-
-  line-height:1.45;
-
-  margin:7px 0 0;
+  position:relative;overflow:hidden;margin-bottom:23px;
 
 }
 
-.dday-card{
+.love-card:after{
 
-  background:#fbf4f6;
+  content:"♡";position:absolute;right:20px;top:5px;
 
-  border-radius:20px;
-
-  padding:23px;
-
-  margin-bottom:28px;
+  font-size:85px;color:#fff;opacity:.55;
 
 }
 
-.dday-card .label{
+.love-label{font-size:10px;letter-spacing:2px;color:#9b7788;font-weight:700}
 
-  font-size:11px;
+.love-card h2{font-size:15px;margin:13px 0 3px;font-weight:600}
 
-  letter-spacing:1.5px;
+.dday{font-size:34px;font-weight:850;color:#a96e88;letter-spacing:-1px}
 
-  color:#a77a8b;
-
-  font-weight:700;
-
-}
-
-.dday-number{
-
-  font-size:39px;
-
-  font-weight:800;
-
-  color:#bd7892;
-
-  margin:8px 0 2px;
-
-  letter-spacing:-1px;
-
-}
-
-.dday-caption{
-
-  font-size:12px;
-
-  color:#9b858e;
-
-}
+.love-sub{font-size:11px;color:#9a8390;margin-top:5px}
 
 .section-head{
 
-  display:flex;
+  display:flex;align-items:end;justify-content:space-between;
 
-  justify-content:space-between;
-
-  align-items:center;
-
-  margin:25px 0 13px;
+  margin:24px 1px 13px;
 
 }
 
-.section-head h2{
+.section-head h2{font-size:17px;margin:0;letter-spacing:-.5px}
 
-  font-size:17px;
+.section-head small{font-size:11px;color:var(--muted)}
 
-  margin:0;
+.calendar-card{
 
-  letter-spacing:-.5px;
+  background:var(--surface);border:1px solid var(--line);
 
-}
+  border-radius:21px;padding:17px 13px 15px;
 
-.section-head button{
-
-  background:none;
-
-  color:var(--pink);
-
-  font-size:12px;
-
-  font-weight:700;
-
-}
-
-.quick-menu{
-
-  display:grid;
-
-  grid-template-columns:repeat(2,1fr);
-
-  gap:10px;
-
-}
-
-.quick-item{
-
-  min-height:100px;
-
-  background:#fff;
-
-  border:1px solid var(--line);
-
-  border-radius:16px;
-
-  padding:17px;
-
-  text-align:left;
-
-  color:var(--ink);
-
-  transition:.2s;
-
-}
-
-.quick-item:active{background:#faf6f8}
-
-.quick-item .symbol{
-
-  display:block;
-
-  font-size:20px;
-
-  margin-bottom:12px;
-
-  color:var(--pink);
-
-}
-
-.quick-item strong{
-
-  display:block;
-
-  font-size:14px;
-
-}
-
-.quick-item small{
-
-  display:block;
-
-  margin-top:5px;
-
-  font-size:11px;
-
-  color:var(--sub);
-
-}
-
-.upcoming{
-
-  border-top:1px solid var(--line);
-
-}
-
-.upcoming-item{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:14px;
-
-  padding:14px 0;
-
-  border-bottom:1px solid var(--line);
-
-}
-
-.date-box{
-
-  width:46px;
-
-  height:48px;
-
-  flex-shrink:0;
-
-  border-radius:12px;
-
-  background:#f9f3f5;
-
-  display:flex;
-
-  flex-direction:column;
-
-  align-items:center;
-
-  justify-content:center;
-
-  color:#bd7892;
-
-}
-
-.date-box b{font-size:17px}
-
-.date-box small{font-size:9px}
-
-.upcoming-info{min-width:0;flex:1}
-
-.upcoming-info strong{
-
-  font-size:13px;
-
-  display:block;
-
-}
-
-.upcoming-info small{
-
-  display:block;
-
-  margin-top:4px;
-
-  font-size:11px;
-
-  color:var(--sub);
-
-}
-
-.empty{
-
-  padding:28px 10px;
-
-  text-align:center;
-
-  color:var(--sub);
-
-  font-size:13px;
-
-}
-
-nav{
-
-  position:fixed;
-
-  z-index:10;
-
-  bottom:0;
-
-  left:50%;
-
-  transform:translateX(-50%);
-
-  width:min(520px,100%);
-
-  background:rgba(255,255,255,.97);
-
-  border-top:1px solid var(--line);
-
-  padding:9px 8px calc(9px + env(safe-area-inset-bottom));
-
-  display:flex;
-
-  justify-content:space-around;
-
-}
-
-nav button{
-
-  background:none;
-
-  color:#aaa3a9;
-
-  min-width:58px;
-
-  display:flex;
-
-  flex-direction:column;
-
-  align-items:center;
-
-  gap:4px;
-
-  font-size:10px;
-
-}
-
-nav button .nav-icon{font-size:20px}
-
-nav button.active{color:var(--pink);font-weight:800}
-
-.card{
-
-  border:1px solid var(--line);
-
-  border-radius:17px;
-
-  padding:17px;
-
-  margin-bottom:14px;
-
-  background:#fff;
-
-}
-
-.primary{
-
-  width:100%;
-
-  padding:14px;
-
-  border-radius:12px;
-
-  background:var(--pink);
-
-  color:#fff;
-
-  font-weight:700;
-
-  margin-top:10px;
-
-}
-
-.secondary{
-
-  padding:9px 13px;
-
-  border-radius:9px;
-
-  background:#f7f2f4;
-
-  color:#956b7c;
-
-  font-size:12px;
-
-  font-weight:650;
-
-}
-
-.danger{color:#c16e80;background:#fff1f3}
-
-input,textarea{
-
-  display:block;
-
-  width:100%;
-
-  padding:13px;
-
-  margin:7px 0 15px;
-
-  border:1px solid var(--line);
-
-  border-radius:11px;
-
-  background:#fff;
-
-  outline:none;
-
-  color:var(--ink);
-
-}
-
-input:focus,textarea:focus{border-color:#d9a0b5}
-
-textarea{min-height:110px;resize:vertical}
-
-label{
-
-  display:block;
-
-  font-size:12px;
-
-  color:#817982;
-
-  font-weight:600;
-
-}
-
-.row{display:flex;gap:10px}
-
-.row>*{flex:1;min-width:0}
-
-.status{
-
-  color:var(--sub);
-
-  font-size:12px;
-
-  line-height:1.7;
-
-}
-
-.back{
-
-  padding:10px 0;
-
-  background:none;
-
-  color:var(--pink);
-
-  font-size:13px;
-
-  font-weight:700;
+  box-shadow:var(--shadow);
 
 }
 
 .calendar-head{
 
-  display:flex;
+  display:flex;align-items:center;justify-content:space-between;
 
-  justify-content:space-between;
-
-  align-items:center;
-
-  margin:12px 0 17px;
+  padding:1px 3px 13px;
 
 }
 
-.month-label{font-size:19px;font-weight:800}
+.month-label{font-size:17px;font-weight:800;letter-spacing:-.5px}
 
 .month-btn{
 
-  width:34px;height:34px;
+  width:32px;height:32px;border-radius:50%;
 
-  border-radius:50%;
-
-  background:#f8f5f6;
-
-  color:#9c7b89;
-
-  font-size:19px;
+  background:#f8f5f6;color:#766b73;font-size:20px;
 
 }
 
 .calendar-grid{
 
-  display:grid;
+  display:grid;grid-template-columns:repeat(7,minmax(0,1fr));
 
-  grid-template-columns:repeat(7,1fr);
-
-  text-align:center;
-
-  gap:3px;
+  gap:3px;text-align:center;
 
 }
 
-.weekday{
-
-  font-size:11px;
-
-  color:#aaa1a8;
-
-  padding:8px 0;
-
-}
+.weekday{font-size:10px;color:#aaa1a7;padding:8px 0}
 
 .day{
 
-  position:relative;
+  position:relative;min-width:0;height:44px;
 
-  height:43px;
+  border-radius:13px;background:transparent;
 
-  background:none;
+  color:#514a51;font-size:12px;
 
-  color:var(--ink);
-
-  border-radius:12px;
-
-  font-size:13px;
+  display:flex;align-items:center;justify-content:center;
 
 }
 
-.day.muted{color:#d7d1d5}
+.day.muted{color:#d5cfd3}
 
-.day.today{border:1px solid #dfaabd}
+.day.today{border:1px solid #d8a5b9;color:#a96e88;font-weight:800}
 
-.day.selected{background:var(--pink);color:white}
+.day.selected{background:#c987a1;color:#fff;font-weight:800}
 
-.day .dot{
+.dot{
 
-  position:absolute;
+  position:absolute;width:4px;height:4px;
 
-  bottom:4px;
+  border-radius:50%;background:#c987a1;
 
-  left:calc(50% - 2px);
-
-  width:4px;height:4px;
-
-  border-radius:50%;
-
-  background:var(--pink);
+  bottom:5px;left:calc(50% - 2px);
 
 }
 
 .day.selected .dot{background:#fff}
 
+.selected-area{
+
+  border-top:1px solid #f2edef;margin-top:13px;padding-top:13px;
+
+}
+
 .selected-date{
 
-  margin:20px 0 10px;
-
-  font-size:14px;
-
-  font-weight:750;
+  font-size:13px;font-weight:750;margin-bottom:8px;
 
 }
 
 .listitem{
 
-  padding:14px 0;
-
-  border-bottom:1px solid var(--line);
+  padding:11px 0;border-bottom:1px solid #f3eff0;
 
 }
 
@@ -674,493 +232,323 @@ label{
 
 .listitem strong{font-size:13px}
 
-.listitem p{
+.listitem p{font-size:11px;color:var(--muted);margin:5px 0 0;white-space:pre-wrap}
 
-  color:var(--sub);
+.empty{padding:15px 5px;text-align:center;font-size:12px;color:#aaa1a7}
 
-  font-size:12px;
+.primary{
 
-  line-height:1.6;
+  width:100%;padding:13px;border-radius:13px;
 
-  margin:5px 0;
+  background:#c987a1;color:white;font-weight:750;
 
-  white-space:pre-wrap;
+  margin-top:10px;
 
 }
 
+.secondary{
+
+  padding:8px 11px;border-radius:10px;
+
+  background:#f5edf1;color:#9b6d82;font-size:11px;
+
+  margin:3px;
+
+}
+
+.danger{background:#fff0f0;color:#bd7180}
+
 .event-form{
 
-  border-top:1px solid var(--line);
-
-  padding-top:15px;
-
-  margin-top:15px;
+  border-top:1px solid var(--line);margin-top:13px;padding-top:13px;
 
 }
 
 .hidden{display:none!important}
 
-.envelope-list{
+label{font-size:11px;color:var(--muted)}
 
-  display:grid;
+input,textarea{
 
-  grid-template-columns:repeat(2,minmax(0,1fr));
+  width:100%;border:1px solid var(--line);
 
-  gap:11px;
+  border-radius:12px;padding:12px;margin:6px 0 12px;
+
+  background:#fff;color:var(--ink);outline:none;
 
 }
 
+textarea{min-height:90px;resize:vertical}
+
+.row{display:flex;gap:9px}
+
+.row>div{flex:1;min-width:0}
+
+.shortcuts{
+
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+
+  margin-top:13px;
+
+}
+
+.shortcut{
+
+  background:white;border:1px solid var(--line);
+
+  border-radius:17px;padding:15px 7px;
+
+  text-align:center;color:var(--ink);
+
+}
+
+.shortcut span{display:block;font-size:20px;margin-bottom:8px}
+
+.shortcut b{font-size:11px;font-weight:700}
+
+.quote{
+
+  text-align:center;color:#a99ca4;
+
+  font-size:11px;margin:24px 0 5px;
+
+}
+
+nav{
+
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+
+  width:min(520px,100%);z-index:10;
+
+  background:rgba(255,255,255,.94);
+
+  backdrop-filter:blur(18px);
+
+  border-top:1px solid var(--line);
+
+  display:flex;justify-content:space-around;
+
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+
+}
+
+nav button{
+
+  background:none;color:#a49ba1;
+
+  display:flex;flex-direction:column;align-items:center;
+
+  gap:4px;font-size:10px;min-width:54px;
+
+}
+
+nav button span{font-size:19px}
+
+nav button.active{color:#b87591;font-weight:800}
+
+.page-title{font-size:23px;letter-spacing:-1px;margin:17px 0 5px}
+
+.page-desc{font-size:11px;color:var(--muted);margin-bottom:19px}
+
+.panel{
+
+  background:white;border:1px solid var(--line);
+
+  border-radius:19px;padding:17px;margin:13px 0;
+
+  box-shadow:var(--shadow);
+
+}
+
+.envelope-list{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
+
 .envelope{
 
-  min-height:125px;
+  min-height:125px;border-radius:13px;
 
-  border:1px solid #eedce3;
+  background:linear-gradient(145deg,#f5dce6,#fff5f7);
 
-  border-radius:13px;
+  border:1px solid #edcfda;color:#93667b;
 
-  background:#fbf1f5;
+  display:flex;align-items:center;justify-content:center;
 
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  flex-direction:column;
-
-  padding:13px 8px;
-
-  color:#936b7d;
-
-  overflow:hidden;
-
-  position:relative;
+  flex-direction:column;padding:12px;position:relative;
 
 }
 
 .envelope:before{
 
-  content:"";
+  content:"";position:absolute;top:0;left:0;right:0;height:48%;
 
-  position:absolute;
-
-  inset:0 0 auto;
-
-  height:48%;
-
-  background:#f2d8e2;
-
-  clip-path:polygon(0 0,100% 0,50% 100%);
+  background:#edc4d3;clip-path:polygon(0 0,100% 0,50% 100%);
 
 }
 
-.envelope .seal{
+.envelope>*{z-index:1}
 
-  position:relative;
+.envelope .seal{font-size:24px}
 
-  font-size:23px;
+.envelope b{font-size:12px;margin-top:6px}
 
-  margin-bottom:7px;
-
-}
-
-.envelope b,.envelope small{position:relative}
-
-.envelope b{font-size:12px}
-
-.envelope small{
-
-  margin-top:6px;
-
-  font-size:10px;
-
-  color:#a58b97;
-
-}
+.envelope small{font-size:9px;color:#a78a98;margin-top:5px}
 
 .letter-overlay{
 
-  position:fixed;
+  position:fixed;inset:0;background:#f5edf2ed;z-index:30;
 
-  inset:0;
+  display:flex;align-items:center;justify-content:center;
 
-  z-index:30;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  padding:22px;
-
-  background:rgba(48,35,43,.45);
-
-  opacity:0;
-
-  pointer-events:none;
-
-  transition:opacity .25s;
+  padding:22px;opacity:0;pointer-events:none;transition:.25s;
 
 }
 
 .letter-overlay.show{opacity:1;pointer-events:auto}
 
-.letter-stage{
-
-  width:min(390px,100%);
-
-  height:390px;
-
-  position:relative;
-
-}
+.letter-stage{width:min(420px,100%);height:390px;position:relative;display:flex;align-items:flex-end;justify-content:center}
 
 .big-envelope{
 
-  position:absolute;
+  position:absolute;bottom:25px;width:100%;height:210px;
 
-  bottom:25px;
-
-  width:100%;
-
-  height:210px;
-
-  border-radius:10px;
-
-  background:#eab8ca;
-
-  z-index:2;
+  background:#eebdce;border-radius:12px;z-index:2;
 
 }
 
 .big-envelope:before{
 
-  content:"";
-
-  position:absolute;
-
-  inset:0;
-
-  background:#f5d8e2;
+  content:"";position:absolute;inset:0;background:#f6d7e1;
 
   clip-path:polygon(0 0,50% 58%,100% 0,100% 100%,0 100%);
-
-  border-radius:10px;
 
 }
 
 .flap{
 
-  position:absolute;
+  position:absolute;top:0;width:100%;height:120px;
 
-  top:0;left:0;
+  background:#e6a9bf;clip-path:polygon(0 0,100% 0,50% 100%);
 
-  width:100%;height:120px;
-
-  background:#e4a7bd;
-
-  clip-path:polygon(0 0,100% 0,50% 100%);
-
-  transform-origin:top;
-
-  transition:transform .65s ease;
-
-  z-index:4;
+  transform-origin:top;transition:transform .65s;z-index:4;
 
 }
 
 .seal-big{
 
-  position:absolute;
+  position:absolute;left:calc(50% - 22px);top:76px;
 
-  top:76px;left:calc(50% - 22px);
+  width:44px;height:44px;border-radius:50%;
 
-  width:44px;height:44px;
-
-  border-radius:50%;
-
-  background:#cf819e;
-
-  color:white;
-
-  display:grid;
-
-  place-items:center;
-
-  z-index:5;
+  background:#c987a1;color:#fff;display:grid;place-items:center;z-index:5;
 
 }
 
 .paper{
 
-  position:absolute;
+  position:absolute;bottom:60px;width:88%;height:280px;
 
-  bottom:60px;
+  background:#fffdf8;border:1px solid #eee2d8;
 
-  left:6%;
+  border-radius:5px;padding:23px 19px;overflow:auto;
 
-  width:88%;
+  transform:translateY(120px);opacity:0;
 
-  height:280px;
-
-  background:#fffdf8;
-
-  border-radius:5px;
-
-  padding:23px 19px;
-
-  overflow:auto;
-
-  transform:translateY(120px);
-
-  opacity:0;
-
-  transition:transform .7s ease .25s,opacity .4s .25s;
-
-  z-index:1;
+  transition:transform .7s .2s,opacity .4s .2s;z-index:1;
 
 }
 
-.letter-overlay.open .flap{
+.letter-overlay.open .flap{transform:rotateX(180deg);z-index:0}
 
-  transform:rotateX(180deg);
+.letter-overlay.open .paper{transform:translateY(-30px);opacity:1;z-index:5}
 
-  z-index:0;
-
-}
-
-.letter-overlay.open .paper{
-
-  transform:translateY(-30px);
-
-  opacity:1;
-
-  z-index:5;
-
-}
-
-.paper h3{font-size:18px;margin:0 0 10px}
+.paper h3{font-size:18px;margin:0 0 12px}
 
 .paper p{font-size:13px;line-height:1.8;white-space:pre-wrap}
 
-.paper .date{font-size:10px;color:var(--sub)}
+.paper .date{font-size:10px;color:var(--muted);margin-bottom:12px}
 
 .close-letter{
 
-  position:absolute;
+  position:absolute;top:0;right:0;z-index:8;
 
-  top:0;right:0;
+  background:white;border:1px solid var(--line);
 
-  z-index:8;
-
-  background:white;
-
-  border-radius:20px;
-
-  padding:9px 14px;
-
-  color:#555;
+  border-radius:20px;padding:9px 14px;
 
 }
 
 .draw-machine{
 
-  text-align:center;
+  border-radius:24px;background:linear-gradient(145deg,#fff,#f5e8ef);
 
-  padding:25px 15px;
-
-  background:#fbf5f7;
-
-  border-radius:19px;
+  padding:22px 15px;text-align:center;border:1px solid #eddae3;
 
 }
 
-.machine-top{
-
-  font-size:10px;
-
-  letter-spacing:2px;
-
-  color:#a77a8b;
-
-  font-weight:800;
-
-}
+.machine-top{font-size:10px;letter-spacing:2px;color:#a77a8e;font-weight:800}
 
 .globe{
 
-  width:205px;height:205px;
+  width:205px;height:205px;border-radius:50%;
 
-  border-radius:50%;
+  margin:20px auto 0;background:linear-gradient(145deg,#fff,#f2dce6);
 
-  margin:20px auto 0;
+  border:9px solid #e5b2c6;
 
-  background:linear-gradient(145deg,#fff,#f4dce5);
+  box-shadow:inset 0 0 25px #d9a4b7,0 7px 0 #cc8ca5;
 
-  border:8px solid #e5b0c3;
+  display:flex;align-items:center;justify-content:center;
 
-  box-shadow:inset 0 0 20px #e2bdcc,0 6px 0 #d39aaf;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  flex-wrap:wrap;
-
-  gap:8px;
-
-  padding:23px;
+  flex-wrap:wrap;gap:8px;padding:24px;
 
 }
 
-.capsule{
+.capsule{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#fff,#e89bb7);border:2px solid #d887a4}
 
-  width:39px;height:39px;
-
-  border-radius:50%;
-
-  background:linear-gradient(135deg,#fff,#e99fbb);
-
-  border:2px solid #d887a4;
-
-  box-shadow:inset -3px -3px 0 #d984a3;
-
-}
-
-.capsule:nth-child(2n){
-
-  background:linear-gradient(135deg,#fff,#c9b5dd);
-
-  border-color:#b59bcf;
-
-}
+.capsule:nth-child(2n){background:linear-gradient(135deg,#fff,#c9b5dd);border-color:#b59bcf}
 
 .globe.spinning{animation:shake .18s infinite alternate}
 
-@keyframes shake{
+@keyframes shake{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
 
-  from{transform:rotate(-3deg)}
-
-  to{transform:rotate(3deg)}
-
-}
-
-.machine-base{
-
-  width:170px;
-
-  margin:0 auto;
-
-  padding:13px;
-
-  border-radius:0 0 17px 17px;
-
-  background:#e6b1c4;
-
-  color:#fff;
-
-  font-weight:800;
-
-  font-size:12px;
-
-}
+.machine-base{width:170px;margin:0 auto;background:#e9b1c5;border-radius:0 0 20px 20px;padding:14px;color:white;font-size:12px;font-weight:800}
 
 .draw-result{
 
-  margin-top:16px;
+  background:#fff;border:1px solid var(--line);border-radius:15px;
 
-  min-height:70px;
+  padding:17px;margin-top:14px;min-height:65px;
 
-  border-radius:13px;
-
-  background:#fff;
-
-  display:grid;
-
-  place-items:center;
-
-  padding:15px;
-
-  color:#a96683;
-
-  font-weight:800;
-
-  font-size:16px;
+  display:grid;place-items:center;font-size:16px;font-weight:800;color:#ad7189;
 
 }
 
-.code{
+.code{font-size:22px;letter-spacing:5px;font-weight:850;text-align:center;background:#f8f1f4;padding:15px;border-radius:13px}
 
-  font-size:24px;
-
-  letter-spacing:5px;
-
-  font-weight:800;
-
-  text-align:center;
-
-  padding:17px;
-
-  border-radius:12px;
-
-  background:#faf3f6;
-
-  margin:12px 0;
-
-}
+.status{font-size:12px;color:var(--muted);line-height:1.7}
 
 #authGate{
 
-  position:fixed;
+  position:fixed;inset:0;background:var(--bg);z-index:20;
 
-  inset:0;
-
-  z-index:50;
-
-  background:#fff;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  padding:22px;
+  display:flex;align-items:center;justify-content:center;padding:22px;
 
 }
 
-#authCard{width:min(420px,100%)}
+#authCard{
 
-#authCard h1{font-size:25px;letter-spacing:-1px}
+  width:min(440px,100%);background:#fff;
 
-#authCard p{font-size:13px;color:var(--sub);line-height:1.7}
-
-.auth-logo{
-
-  font-size:13px;
-
-  font-weight:850;
-
-  letter-spacing:2px;
-
-  color:var(--pink);
+  border:1px solid var(--line);border-radius:23px;padding:23px;
 
 }
 
-.auth-panel{
-
-  padding:17px 0;
-
-  border-top:1px solid var(--line);
-
-}
+#authCard h1{font-size:22px}
 
 @media(max-width:360px){
 
-  .app{padding-left:16px;padding-right:16px}
+  .app{padding-left:15px;padding-right:15px}
+
+  .day{height:40px}
 
   .globe{width:185px;height:185px}
 
@@ -1176,17 +564,17 @@ label{
 
   <div id="authCard">
 
-    <div class="auth-logo">OUR : US</div>
+    <div class="brand">OUR<span>:</span>US</div>
 
-    <h1>우리 둘만의 공간</h1>
+    <h1>우리 둘만의 공간 ♡</h1>
 
-    <p>각자의 Google 계정으로 로그인하고 둘만의 공간을 만들어봐.</p>
+    <p class="status">각자 Google 계정으로 로그인한 뒤 함께 연결해줘.</p>
 
     <button class="primary" id="loginBtn">Google로 로그인</button>
 
     <div id="pairSetup" class="hidden">
 
-      <div class="auth-panel">
+      <div class="panel">
 
         <b>새로운 우리 공간 만들기</b>
 
@@ -1194,11 +582,11 @@ label{
 
       </div>
 
-      <div class="auth-panel">
+      <div class="panel">
 
         <b>초대 코드로 참여하기</b>
 
-        <input id="joinCode" maxlength="8" placeholder="상대가 알려준 초대 코드">
+        <input id="joinCode" placeholder="상대의 초대 코드" maxlength="8">
 
         <button class="primary" id="joinPairBtn">초대 코드로 연결</button>
 
@@ -1206,7 +594,7 @@ label{
 
     </div>
 
-    <p id="authStatus">로그인이 필요해.</p>
+    <p id="authStatus" class="status">로그인이 필요해.</p>
 
   </div>
 
@@ -1216,223 +604,127 @@ label{
 
 <header>
 
-  <button class="icon-button" onclick="showPage('home')">⌂</button>
+  <button class="iconbtn" onclick="showPage('home')">⌂</button>
 
   <div class="brand">OUR<span>:</span>US</div>
 
-  <button class="icon-button" onclick="showPage('settings')">⚙</button>
+  <button class="iconbtn" onclick="showPage('settings')">⚙</button>
 
 </header>
 
 <section id="home" class="page active">
 
-  <div class="home-greeting">
+  <div class="home-top">
 
-    <small id="todayLabel">오늘도 함께</small>
+    <div class="greeting">
 
-    <h1>우리의 작은 일상,<br>여기에서 기록해요.</h1>
+      <small>OUR LITTLE UNIVERSE</small>
+
+      <h1>오늘도 우리답게 ♡</h1>
+
+    </div>
+
+    <div class="profile-dot">♡</div>
 
   </div>
 
-  <div class="dday-card">
+  <div class="love-card">
 
-    <div class="label">OUR FIRST DAY</div>
+    <div class="love-label">OUR FIRST DAY</div>
 
-    <div class="dday-number" id="dday">D+—</div>
+    <h2>우리가 처음 만난 날</h2>
 
-    <div class="dday-caption">2025년 9월 3일 · 우리의 첫 만남</div>
+    <div class="dday" id="dday">D+—</div>
+
+    <div class="love-sub">2025년 9월 3일 · 함께한 시간</div>
 
   </div>
 
   <div class="section-head">
 
-    <h2>우리의 메뉴</h2>
+    <h2>우리의 캘린더</h2>
+
+    <small>함께 기록하는 하루</small>
 
   </div>
 
-  <div class="quick-menu">
+  <div class="calendar-card" id="homeCalendar">
 
-    <button class="quick-item" onclick="showPage('calendar')">
+    <div class="calendar-head">
 
-      <span class="symbol">▦</span>
+      <button class="month-btn" onclick="changeMonth(-1)">‹</button>
 
-      <strong>우리의 일정</strong>
+      <div class="month-label" id="monthLabel"></div>
 
-      <small>함께 쓰는 캘린더</small>
+      <button class="month-btn" onclick="changeMonth(1)">›</button>
 
-    </button>
+    </div>
 
-    <button class="quick-item" onclick="showPage('letters')">
+    <div class="calendar-grid" id="calendarGrid"></div>
 
-      <span class="symbol">✉</span>
+    <div class="selected-area">
 
-      <strong>열어봐 편지</strong>
+      <div class="selected-date" id="selectedDateLabel"></div>
 
-      <small>서로에게 남기는 편지</small>
+      <div id="eventList"></div>
 
-    </button>
+      <button class="primary" onclick="toggleEventForm()">＋ 일정 추가</button>
 
-    <button class="quick-item" onclick="showPage('draw')">
+      <div id="eventForm" class="event-form hidden">
 
-      <span class="symbol">♡</span>
+        <label>일정 이름</label>
 
-      <strong>사랑 랜덤 뽑기</strong>
+        <input id="eventTitle" placeholder="예: 저녁 먹기">
 
-      <small>오늘의 작은 설렘</small>
+        <div class="row">
 
-    </button>
+          <div><label>시간</label><input id="eventTime" type="time"></div>
 
-    <button class="quick-item" onclick="showPage('anniversary')">
+          <div><label>장소</label><input id="eventPlace" placeholder="만날 장소"></div>
 
-      <span class="symbol">♡</span>
+        </div>
 
-      <strong>우리의 기념일</strong>
+        <label>메모</label>
 
-      <small>특별한 날짜 모아보기</small>
+        <textarea id="eventMemo" placeholder="기억할 내용"></textarea>
 
-    </button>
+        <button class="primary" onclick="saveEvent()">일정 저장하기</button>
+
+      </div>
+
+    </div>
 
   </div>
 
   <div class="section-head">
 
-    <h2>다가오는 일정</h2>
+    <h2>우리의 공간</h2>
 
-    <button onclick="showPage('calendar')">전체보기</button>
-
-  </div>
-
-  <div id="homeUpcoming" class="upcoming">
-
-    <div class="empty">등록된 일정이 아직 없어.</div>
+    <small>둘만의 작은 메뉴</small>
 
   </div>
 
-</section>
+  <div class="shortcuts">
 
-<section id="calendar" class="page">
+    <button class="shortcut" onclick="showPage('letters')"><span>💌</span><b>열어봐 편지</b></button>
 
-  <div class="page-heading">
+    <button class="shortcut" onclick="showPage('draw')"><span>♡</span><b>랜덤 뽑기</b></button>
 
-    <h1>우리의 일정</h1>
-
-    <p>함께 계획하고 기록하는 시간</p>
+    <button class="shortcut" onclick="showPage('anniversary')"><span>✧</span><b>기념일</b></button>
 
   </div>
 
-  <div class="calendar-head">
-
-    <button class="month-btn" onclick="changeMonth(-1)">‹</button>
-
-    <div class="month-label" id="monthLabel"></div>
-
-    <button class="month-btn" onclick="changeMonth(1)">›</button>
-
-  </div>
-
-  <div class="calendar-grid" id="calendarGrid"></div>
-
-  <div class="selected-date" id="selectedDateLabel"></div>
-
-  <div id="eventList"></div>
-
-  <button class="primary" onclick="toggleEventForm()">＋ 일정 추가</button>
-
-  <div id="eventForm" class="card event-form hidden">
-
-    <label>일정 이름</label>
-
-    <input id="eventTitle" placeholder="예: 저녁 먹기">
-
-    <div class="row">
-
-      <div>
-
-        <label>시간</label>
-
-        <input id="eventTime" type="time">
-
-      </div>
-
-      <div>
-
-        <label>장소</label>
-
-        <input id="eventPlace" placeholder="만날 장소">
-
-      </div>
-
-    </div>
-
-    <label>메모</label>
-
-    <textarea id="eventMemo" placeholder="기억할 내용"></textarea>
-
-    <button class="primary" onclick="saveEvent()">일정 저장</button>
-
-  </div>
-
-</section>
-
-<section id="draw" class="page">
-
-  <div class="page-heading">
-
-    <h1>사랑 랜덤 뽑기</h1>
-
-    <p>오늘은 어떤 작은 행운이 나올까?</p>
-
-  </div>
-
-  <div class="draw-machine">
-
-    <div class="machine-top">OUR LITTLE LUCKY DRAW</div>
-
-    <div class="globe" id="globe">
-
-      <i class="capsule"></i><i class="capsule"></i>
-
-      <i class="capsule"></i><i class="capsule"></i>
-
-      <i class="capsule"></i><i class="capsule"></i>
-
-    </div>
-
-    <div class="machine-base">LUCKY LOVE</div>
-
-    <button class="primary" id="drawButton" onclick="drawOne()">캡슐 뽑기</button>
-
-    <div class="draw-result" id="drawResult">두근두근… 어떤 게 나올까?</div>
-
-  </div>
-
-  <div id="drawAdmin" class="card hidden">
-
-    <div class="section-head"><h2>뽑기 항목 관리</h2></div>
-
-    <div id="drawItems"></div>
-
-    <label>새 항목 추가</label>
-
-    <input id="newDrawItem" placeholder="뽑기 항목을 적어줘">
-
-    <button class="secondary" onclick="addDrawItem()">항목 추가</button>
-
-  </div>
+  <div class="quote">“평범한 하루도 너와 함께라면 특별해.”</div>
 
 </section>
 
 <section id="letters" class="page">
 
-  <div class="page-heading">
+  <h1 class="page-title">열어봐 편지 💌</h1>
 
-    <h1>열어봐 편지</h1>
+  <div class="page-desc">봉투를 눌러 열어봐</div>
 
-    <p>마음속에 담아둔 이야기를 전해봐.</p>
-
-  </div>
-
-  <div class="card">
+  <div class="panel">
 
     <label>편지 제목</label>
 
@@ -1452,31 +744,63 @@ label{
 
 </section>
 
+<section id="draw" class="page">
+
+  <h1 class="page-title">사랑 랜덤 뽑기</h1>
+
+  <div class="page-desc">오늘은 어떤 사랑이 나올까?</div>
+
+  <div class="draw-machine">
+
+    <div class="machine-top">OUR LITTLE LUCKY DRAW</div>
+
+    <div class="globe" id="globe">
+
+      <i class="capsule"></i><i class="capsule"></i><i class="capsule"></i>
+
+      <i class="capsule"></i><i class="capsule"></i><i class="capsule"></i>
+
+    </div>
+
+    <div class="machine-base">LUCKY LOVE</div>
+
+    <button class="primary" id="drawButton" onclick="drawOne()">캡슐 뽑기</button>
+
+    <div class="draw-result" id="drawResult">두근두근… 어떤 게 나올까?</div>
+
+  </div>
+
+  <div class="panel hidden" id="drawAdmin">
+
+    <b>뽑기 항목 관리</b>
+
+    <div id="drawItems"></div>
+
+    <label>새 항목 추가</label>
+
+    <input id="newDrawItem" placeholder="예: 오늘은 디저트 사주기">
+
+    <button class="secondary" onclick="addDrawItem()">항목 추가</button>
+
+  </div>
+
+</section>
+
 <section id="anniversary" class="page">
 
-  <div class="page-heading">
+  <h1 class="page-title">우리의 기념일</h1>
 
-    <h1>우리의 기념일</h1>
+  <div class="panel">
 
-    <p>함께한 시간과 특별한 날짜</p>
+    <div class="love-label">OUR FIRST DAY</div>
 
-  </div>
+    <h2>2025년 9월 3일</h2>
 
-  <div class="dday-card">
+    <div class="dday" id="dday2">D+—</div>
 
-    <div class="label">OUR FIRST DAY</div>
+    <p class="status" id="annivList"></p>
 
-    <div class="dday-number" id="dday2">D+—</div>
-
-    <div class="dday-caption">2025년 9월 3일 · 첫 만남</div>
-
-  </div>
-
-  <div class="card">
-
-    <b>다음 100일 기념일</b>
-
-    <p id="annivList" class="status"></p>
+    <p class="status" id="nextAnniv"></p>
 
   </div>
 
@@ -1484,35 +808,27 @@ label{
 
 <section id="settings" class="page">
 
-  <div class="page-heading">
+  <h1 class="page-title">우리 공간 설정</h1>
 
-    <h1>설정</h1>
-
-    <p>우리 공간과 계정 정보</p>
-
-  </div>
-
-  <div class="card">
+  <div class="panel">
 
     <b>우리 공간</b>
 
-    <p id="coupleInfo" class="status"></p>
+    <p class="status" id="coupleInfo"></p>
 
     <div class="code" id="inviteCodeView">--------</div>
 
     <button class="secondary" onclick="copyInvite()">초대 코드 복사</button>
 
-    <p class="status">이 코드를 상대에게 보내면 같은 공간에 참여할 수 있어.</p>
-
   </div>
 
-  <div class="card">
+  <div class="panel">
 
-    <b>계정 정보</b>
+    <b>계정</b>
 
-    <p id="userInfo" class="status"></p>
+    <p class="status" id="userInfo"></p>
 
-    <p id="roleInfo" class="status"></p>
+    <p class="status" id="roleInfo"></p>
 
     <button class="secondary" onclick="logout()">로그아웃</button>
 
@@ -1524,41 +840,17 @@ label{
 
 <nav>
 
-  <button class="active" data-page="home" onclick="showPage('home')">
+  <button class="active" data-page="home" onclick="showPage('home')"><span>⌂</span>홈</button>
 
-    <span class="nav-icon">⌂</span>홈
+  <button data-page="calendar" onclick="goCalendar()"><span>▦</span>캘린더</button>
 
-  </button>
+  <button data-page="letters" onclick="showPage('letters')"><span>✉</span>편지</button>
 
-  <button data-page="calendar" onclick="showPage('calendar')">
-
-    <span class="nav-icon">▦</span>일정
-
-  </button>
-
-  <button data-page="draw" onclick="showPage('draw')">
-
-    <span class="nav-icon">♡</span>뽑기
-
-  </button>
-
-  <button data-page="letters" onclick="showPage('letters')">
-
-    <span class="nav-icon">✉</span>편지
-
-  </button>
-
-  <button data-page="settings" onclick="showPage('settings')">
-
-    <span class="nav-icon">⚙</span>설정
-
-  </button>
+  <button data-page="draw" onclick="showPage('draw')"><span>♡</span>뽑기</button>
 
 </nav>
 
-<div id="letterOverlay" class="letter-overlay"
-
-onclick="if(event.target===this)closeLetter()">
+<div id="letterOverlay" class="letter-overlay" onclick="if(event.target===this)closeLetter()">
 
   <div class="letter-stage">
 
@@ -1566,13 +858,7 @@ onclick="if(event.target===this)closeLetter()">
 
     <div class="paper" id="letterPaper"></div>
 
-    <div class="big-envelope">
-
-      <div class="flap"></div>
-
-      <div class="seal-big">♥</div>
-
-    </div>
+    <div class="big-envelope"><div class="flap"></div><div class="seal-big">♥</div></div>
 
   </div>
 
@@ -1580,61 +866,45 @@ onclick="if(event.target===this)closeLetter()">
 
 <script type="module">
 
-import {initializeApp}
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 
-from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import{
 
-import {
+ getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged,
 
-  getAuth,GoogleAuthProvider,signInWithPopup,
+ signOut,setPersistence,browserLocalPersistence
 
-  onAuthStateChanged,signOut,setPersistence,
+}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 
-  browserLocalPersistence
+import{
 
-} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+ getFirestore,doc,getDoc,setDoc,updateDoc,collection,
 
-import {
+ addDoc,deleteDoc,onSnapshot,query,orderBy,serverTimestamp
 
-  getFirestore,doc,getDoc,setDoc,updateDoc,
-
-  collection,addDoc,deleteDoc,onSnapshot,
-
-  query,orderBy,serverTimestamp
-
-} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const firebaseConfig={
 
-  apiKey:"AIzaSyAedyn6CwIpCMBz44YFQTt5eKBzqCPyRxQ",
+ apiKey:"AIzaSyAedyn6CwIpCMBz44YFQTt5eKBzqCPyRxQ",
 
-  authDomain:"our-us-325ff.firebaseapp.com",
+ authDomain:"our-us-325ff.firebaseapp.com",
 
-  projectId:"our-us-325ff",
+ projectId:"our-us-325ff",
 
-  storageBucket:"our-us-325ff.firebasestorage.app",
+ storageBucket:"our-us-325ff.firebasestorage.app",
 
-  messagingSenderId:"15654738518",
+ messagingSenderId:"15654738518",
 
-  appId:"1:15654738518:web:c5994a47036a010f0af9f7"
+ appId:"1:15654738518:web:c5994a47036a010f0af9f7"
 
 };
 
 const app=initializeApp(firebaseConfig);
 
-const auth=getAuth(app);
+const auth=getAuth(app),db=getFirestore(app),provider=new GoogleAuthProvider();
 
-const db=getFirestore(app);
-
-const provider=new GoogleAuthProvider();
-
-let user=null;
-
-let coupleId=null;
-
-let isOwner=false;
-
-let unsubs=[];
+let user=null,coupleId=null,isOwner=false,unsubs=[];
 
 let month=new Date(new Date().getFullYear(),new Date().getMonth(),1);
 
@@ -1644,913 +914,569 @@ const $=id=>document.getElementById(id);
 
 function iso(d){
 
-  return d.getFullYear()+'-'+
-
-  String(d.getMonth()+1).padStart(2,'0')+'-'+
-
-  String(d.getDate()).padStart(2,'0');
+ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 
 }
 
 function status(t){$('authStatus').textContent=t}
 
-function cleanSubs(){
-
-  unsubs.forEach(f=>f());
-
-  unsubs=[];
-
-}
+function cleanSubs(){unsubs.forEach(f=>f());unsubs=[]}
 
 $('loginBtn').onclick=async()=>{
 
-  try{
+ try{
 
-    await setPersistence(auth,browserLocalPersistence);
+  await setPersistence(auth,browserLocalPersistence);
 
-    await signInWithPopup(auth,provider);
+  await signInWithPopup(auth,provider);
 
-  }catch(e){
-
-    status('로그인 오류: '+e.message);
-
-  }
+ }catch(e){status('로그인 오류: '+e.message)}
 
 };
 
 onAuthStateChanged(auth,async u=>{
 
-  user=u;
+ user=u;
 
-  if(!u){
+ if(!u){
 
-    $('authGate').classList.remove('hidden');
+  $('authGate').classList.remove('hidden');
 
-    $('pairSetup').classList.add('hidden');
+  $('pairSetup').classList.add('hidden');
 
-    $('loginBtn').classList.remove('hidden');
+  $('loginBtn').classList.remove('hidden');
 
-    status('로그인이 필요해.');
+  status('로그인이 필요해.');
 
-    return;
+  return;
 
-  }
+ }
 
-  $('loginBtn').classList.add('hidden');
+ $('loginBtn').classList.add('hidden');
 
-  $('pairSetup').classList.remove('hidden');
+ $('pairSetup').classList.remove('hidden');
 
-  $('userInfo').textContent=u.displayName||u.email||'로그인됨';
+ $('userInfo').textContent=u.displayName||u.email||'로그인됨';
 
-  status('로그인됐어. 기존 공간을 확인하고 있어.');
+ status('로그인됐어. 기존 공간을 확인하고 있어.');
 
-  try{
+ try{
 
-    const m=await getDoc(doc(db,'users',u.uid));
+  const m=await getDoc(doc(db,'users',u.uid));
 
-    if(m.exists()&&m.data().coupleId){
+  if(m.exists()&&m.data().coupleId){
 
-      coupleId=m.data().coupleId;
+   coupleId=m.data().coupleId;
 
-      await enterCouple(coupleId);
+   await enterCouple(coupleId);
 
-    }else{
+  }else{
 
-      $('authGate').classList.remove('hidden');
+   $('authGate').classList.remove('hidden');
 
-      status('새 공간을 만들거나 초대 코드로 참여해줘.');
-
-    }
-
-  }catch(e){
-
-    status('사용자 정보 확인 오류: '+e.message);
+   status('새 공간을 만들거나 초대 코드로 참여해줘.');
 
   }
+
+ }catch(e){status('사용자 정보 확인 오류: '+e.message)}
 
 });
 
 $('createPairBtn').onclick=async()=>{
 
-  try{
+ try{
 
-    const code=makeCode();
+  const code=makeCode(),ref=doc(collection(db,'couples'));
 
-    const ref=doc(collection(db,'couples'));
+  await setDoc(ref,{
 
-    await setDoc(ref,{
+   members:[user.uid],ownerUid:user.uid,
 
-      members:[user.uid],
+   createdAt:serverTimestamp(),inviteCode:code
 
-      ownerUid:user.uid,
+  });
 
-      createdAt:serverTimestamp(),
+  await setDoc(doc(db,'invites',code),{
 
-      inviteCode:code
+   coupleId:ref.id,createdAt:serverTimestamp()
 
-    });
+  });
 
-    await setDoc(doc(db,'invites',code),{
+  await setDoc(doc(db,'users',user.uid),{
 
-      coupleId:ref.id,
+   coupleId:ref.id,email:user.email||'',displayName:user.displayName||''
 
-      createdAt:serverTimestamp()
+  },{merge:true});
 
-    });
+  coupleId=ref.id;
 
-    await setDoc(doc(db,'users',user.uid),{
+  await enterCouple(ref.id);
 
-      coupleId:ref.id,
-
-      email:user.email||'',
-
-      displayName:user.displayName||''
-
-    },{merge:true});
-
-    coupleId=ref.id;
-
-    await enterCouple(ref.id);
-
-  }catch(e){
-
-    status('공간 생성 실패: '+e.message);
-
-  }
+ }catch(e){status('공간 생성 실패: '+e.message)}
 
 };
 
 $('joinPairBtn').onclick=async()=>{
 
-  const code=$('joinCode').value.trim().toUpperCase();
+ const code=$('joinCode').value.trim().toUpperCase();
 
-  if(!code)return status('초대 코드를 입력해줘.');
+ if(!code)return status('초대 코드를 입력해줘.');
 
-  try{
+ try{
 
-    const inv=await getDoc(doc(db,'invites',code));
+  const inv=await getDoc(doc(db,'invites',code));
 
-    if(!inv.exists())throw Error('초대 코드를 찾을 수 없어.');
+  if(!inv.exists())throw Error('초대 코드를 찾을 수 없어.');
 
-    const id=inv.data().coupleId;
+  const id=inv.data().coupleId,cr=doc(db,'couples',id);
 
-    const cr=doc(db,'couples',id);
+  const cs=await getDoc(cr);
 
-    const cs=await getDoc(cr);
+  if(!cs.exists())throw Error('공간이 존재하지 않아.');
 
-    if(!cs.exists())throw Error('공간이 존재하지 않아.');
+  const members=cs.data().members||[];
 
-    const members=cs.data().members||[];
+  if(members.length>=2&&!members.includes(user.uid))throw Error('이미 두 사람이 연결된 공간이야.');
 
-    if(members.length>=2&&!members.includes(user.uid)){
+  if(!members.includes(user.uid))await updateDoc(cr,{members:[...members,user.uid]});
 
-      throw Error('이미 두 사람이 연결된 공간이야.');
+  await setDoc(doc(db,'users',user.uid),{
 
-    }
+   coupleId:id,email:user.email||'',displayName:user.displayName||''
 
-    if(!members.includes(user.uid)){
+  },{merge:true});
 
-      await updateDoc(cr,{members:[...members,user.uid]});
+  coupleId=id;
 
-    }
+  await enterCouple(id);
 
-    await setDoc(doc(db,'users',user.uid),{
-
-      coupleId:id,
-
-      email:user.email||'',
-
-      displayName:user.displayName||''
-
-    },{merge:true});
-
-    coupleId=id;
-
-    await enterCouple(id);
-
-  }catch(e){
-
-    status('연결 실패: '+e.message);
-
-  }
+ }catch(e){status('연결 실패: '+e.message)}
 
 };
 
 function makeCode(){
 
-  const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+ const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 
-  let s='';
-
-  for(let i=0;i<8;i++){
-
-    s+=chars[Math.floor(Math.random()*chars.length)];
-
-  }
-
-  return s;
+ return Array.from({length:8},()=>chars[Math.floor(Math.random()*chars.length)]).join('');
 
 }
 
 async function enterCouple(id){
 
-  const c=await getDoc(doc(db,'couples',id));
+ const c=await getDoc(doc(db,'couples',id));
 
-  if(!c.exists())throw Error('커플 공간을 찾을 수 없어.');
+ if(!c.exists())throw Error('커플 공간을 찾을 수 없어.');
 
-  const data=c.data();
+ const data=c.data(),members=data.members||[];
 
-  const members=data.members||[];
+ isOwner=data.ownerUid?data.ownerUid===user.uid:members[0]===user.uid;
 
-  isOwner=data.ownerUid
+ if(!data.ownerUid&&isOwner)await updateDoc(doc(db,'couples',id),{ownerUid:user.uid});
 
-    ?data.ownerUid===user.uid
+ $('authGate').classList.add('hidden');
 
-    :members[0]===user.uid;
+ $('coupleInfo').textContent='연결된 공간';
 
-  if(!data.ownerUid&&isOwner){
+ $('inviteCodeView').textContent=data.inviteCode||'--------';
 
-    await updateDoc(doc(db,'couples',id),{
+ $('roleInfo').textContent=isOwner?'관리자 계정':'함께 사용하는 계정';
 
-      ownerUid:user.uid
+ $('drawAdmin').classList.toggle('hidden',!isOwner);
 
-    });
+ const seed=await getDoc(doc(db,'couples',id,'meta','seed'));
 
-  }
+ if(!seed.exists()&&isOwner){
 
-  $('authGate').classList.add('hidden');
+  const defaults=['디저트 사주기','저녁 사주기','오늘 하루 칭찬하기','꼭 안아주기','상대방이 고른 영화 보기','손편지 써주기'];
 
-  $('coupleInfo').textContent='연결된 공간';
+  for(const title of defaults){
 
-  $('inviteCodeView').textContent=data.inviteCode||'--------';
+   await addDoc(collection(db,'couples',id,'drawItems'),{
 
-  $('roleInfo').textContent=isOwner?'관리자 계정':'함께 사용하는 계정';
+    title,createdAt:serverTimestamp(),createdBy:user.uid
 
-  $('drawAdmin').classList.toggle('hidden',!isOwner);
-
-  const seed=await getDoc(doc(db,'couples',id,'meta','seed'));
-
-  if(!seed.exists()&&isOwner){
-
-    const defaults=[
-
-      '디저트 사주기',
-
-      '저녁 사주기',
-
-      '오늘 하루 칭찬하기',
-
-      '꼭 안아주기',
-
-      '상대방이 고른 영화 보기',
-
-      '손편지 써주기'
-
-    ];
-
-    for(const title of defaults){
-
-      await addDoc(collection(db,'couples',id,'drawItems'),{
-
-        title,
-
-        createdAt:serverTimestamp(),
-
-        createdBy:user.uid
-
-      });
-
-    }
-
-    await setDoc(doc(db,'couples',id,'meta','seed'),{done:true});
+   });
 
   }
 
-  cleanSubs();
+  await setDoc(doc(db,'couples',id,'meta','seed'),{done:true});
 
-  watch('events',renderEvents);
+ }
 
-  watch('letters',renderLetters);
+ cleanSubs();
 
-  watch('drawItems',renderDraw);
+ watch('events',renderCalendar);
 
-  renderCalendar();
+ watch('letters',renderLetters);
+
+ watch('drawItems',renderDraw);
+
+ renderCalendar();
 
 }
 
 function watch(name,render){
 
-  const qy=query(
+ const qy=query(collection(db,'couples',coupleId,name),orderBy('createdAt','desc'));
 
-    collection(db,'couples',coupleId,name),
+ unsubs.push(onSnapshot(qy,s=>{
 
-    orderBy('createdAt','desc')
+  window[name+'Data']=s.docs.map(d=>({id:d.id,...d.data()}));
 
-  );
+  render();
 
-  unsubs.push(onSnapshot(qy,s=>{
-
-    window[name+'Data']=s.docs.map(d=>({
-
-      id:d.id,...d.data()
-
-    }));
-
-    render();
-
-  },e=>alert('데이터 불러오기 오류: '+e.message)));
+ },e=>alert('데이터 불러오기 오류: '+e.message)));
 
 }
 
-window.showPage=id=>{
+function showPage(id){
 
-  document.querySelectorAll('.page').forEach(p=>{
+ document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));
 
-    p.classList.toggle('active',p.id===id);
+ document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
 
-  });
+ window.scrollTo({top:0,behavior:'smooth'});
 
-  document.querySelectorAll('nav button').forEach(b=>{
+}
 
-    b.classList.toggle('active',b.dataset.page===id);
+window.showPage=showPage;
 
-  });
+window.goCalendar=()=>{
 
-  if(id==='calendar')renderCalendar();
+ showPage('home');
 
-  window.scrollTo(0,0);
+ document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page==='calendar'));
+
+ setTimeout(()=>$('homeCalendar').scrollIntoView({behavior:'smooth',block:'start'}),80);
 
 };
 
 function dday(){
 
-  const start=new Date(2025,8,3);
+ const start=new Date(2025,8,3),now=new Date();
 
-  const now=new Date();
+ now.setHours(0,0,0,0);
 
-  now.setHours(0,0,0,0);
+ const n=Math.floor((now-start)/86400000);
 
-  const n=Math.floor((now-start)/86400000);
+ $('dday').textContent='D+'+n;
 
-  $('dday').textContent='D+'+n;
+ $('dday2').textContent='D+'+n;
 
-  $('dday2').textContent='D+'+n;
+ const next=Math.ceil((n+1)/100)*100,target=new Date(start);
 
-  const next=Math.ceil((n+1)/100)*100;
+ target.setDate(target.getDate()+next);
 
-  const target=new Date(start);
+ const date=(target.getMonth()+1)+'월 '+target.getDate()+'일';
 
-  target.setDate(target.getDate()+next);
+ $('nextAnniv').textContent='다음 '+next+'일 기념일 · '+date;
 
-  $('annivList').textContent=
-
-    next+'일 · '+(target.getMonth()+1)+'월 '+target.getDate()+'일';
+ $('annivList').textContent='다음 100일 기념일: '+next+'일 ('+date+')';
 
 }
 
 dday();
 
-const today=new Date();
-
-$('todayLabel').textContent=
-
-  today.getFullYear()+'년 '+(today.getMonth()+1)+'월 '+today.getDate()+'일';
-
 window.changeMonth=delta=>{
 
-  month=new Date(month.getFullYear(),month.getMonth()+delta,1);
+ month=new Date(month.getFullYear(),month.getMonth()+delta,1);
 
-  renderCalendar();
-
-};
-
-window.selectDate=d=>{
-
-  selectedDate=d;
-
-  renderCalendar();
+ renderCalendar();
 
 };
+
+window.selectDate=d=>{selectedDate=d;renderCalendar()};
 
 function renderCalendar(){
 
-  const y=month.getFullYear();
+ const y=month.getFullYear(),m=month.getMonth();
 
-  const m=month.getMonth();
+ const first=new Date(y,m,1),start=new Date(y,m,1-first.getDay());
 
-  const first=new Date(y,m,1);
+ const grid=$('calendarGrid');
 
-  const start=new Date(y,m,1-first.getDay());
+ if(!grid)return;
 
-  const grid=$('calendarGrid');
+ $('monthLabel').textContent=y+'년 '+(m+1)+'월';
 
-  if(!grid)return;
+ grid.innerHTML=['일','월','화','수','목','금','토'].map(x=>`<div class="weekday">${x}</div>`).join('');
 
-  $('monthLabel').textContent=y+'년 '+(m+1)+'월';
+ const ev=window.eventsData||[];
 
-  grid.innerHTML=['일','월','화','수','목','금','토']
+ for(let i=0;i<42;i++){
 
-    .map(x=>`<div class="weekday">${x}</div>`).join('');
+  const d=new Date(start);d.setDate(start.getDate()+i);
 
-  const ev=window.eventsData||[];
+  const key=iso(d),has=ev.some(e=>e.date===key);
 
-  for(let i=0;i<42;i++){
+  const cls=[d.getMonth()!==m?'muted':'',key===iso(new Date())?'today':'',key===selectedDate?'selected':''].join(' ');
 
-    const d=new Date(start);
+  grid.insertAdjacentHTML('beforeend',`<button class="day ${cls}" onclick="selectDate('${key}')">${d.getDate()}${has?'<i class="dot"></i>':''}</button>`);
 
-    d.setDate(start.getDate()+i);
+ }
 
-    const key=iso(d);
+ $('selectedDateLabel').textContent=selectedDate.replaceAll('-','. ')+' 일정';
 
-    const has=ev.some(e=>e.date===key);
+ const list=ev.filter(e=>e.date===selectedDate).sort((a,b)=>(a.time||'').localeCompare(b.time||''));
 
-    const cls=[
+ $('eventList').innerHTML=list.length?list.map(e=>`
 
-      d.getMonth()!==m?'muted':'',
+  <div class="listitem">
 
-      key===iso(new Date())?'today':'',
+   <strong>${esc(e.time||'시간 미정')} · ${esc(e.title)}</strong>
 
-      key===selectedDate?'selected':''
+   <p>${esc(e.place||'')}${e.memo?' · '+esc(e.memo):''}</p>
 
-    ].join(' ');
+   ${isOwner?`<button class="secondary" onclick="editEvent('${e.id}')">수정</button><button class="secondary danger" onclick="delItem('events','${e.id}')">삭제</button>`:''}
 
-    grid.insertAdjacentHTML('beforeend',
-
-      `<button class="day ${cls}" onclick="selectDate('${key}')">
-
-        ${d.getDate()}${has?'<i class="dot"></i>':''}
-
-      </button>`
-
-    );
-
-  }
-
-  $('selectedDateLabel').textContent=
-
-    selectedDate.replaceAll('-','. ')+' 일정';
-
-  const list=ev.filter(e=>e.date===selectedDate)
-
-    .sort((a,b)=>(a.time||'').localeCompare(b.time||''));
-
-  $('eventList').innerHTML=list.length
-
-    ?list.map(e=>`
-
-      <div class="listitem">
-
-        <strong>${esc(e.time||'시간 미정')} · ${esc(e.title)}</strong>
-
-        <p>${esc(e.place||'')}${e.memo?' · '+esc(e.memo):''}</p>
-
-        ${isOwner?`
-
-          <button class="secondary" onclick="editEvent('${e.id}')">수정</button>
-
-          <button class="secondary danger" onclick="delItem('events','${e.id}')">삭제</button>
-
-        `:''}
-
-      </div>
-
-    `).join('')
-
-    :'<div class="empty">이 날짜에는 등록된 일정이 없어.</div>';
-
-  $('eventForm').classList.add('hidden');
-
-}
-
-function renderEvents(){
-
-  renderCalendar();
-
-  renderUpcoming();
-
-}
-
-function renderUpcoming(){
-
-  const a=(window.eventsData||[])
-
-    .filter(e=>e.date>=iso(new Date()))
-
-    .sort((x,y)=>(x.date+x.time).localeCompare(y.date+y.time))
-
-    .slice(0,3);
-
-  $('homeUpcoming').innerHTML=a.length
-
-    ?a.map(e=>{
-
-      const d=new Date(e.date+'T00:00:00');
-
-      return `
-
-        <div class="upcoming-item">
-
-          <div class="date-box">
-
-            <b>${d.getDate()}</b>
-
-            <small>${d.getMonth()+1}월</small>
-
-          </div>
-
-          <div class="upcoming-info">
-
-            <strong>${esc(e.title)}</strong>
-
-            <small>${esc(e.time||'시간 미정')} · ${esc(e.place||'장소 미정')}</small>
-
-          </div>
-
-        </div>
-
-      `;
-
-    }).join('')
-
-    :'<div class="empty">다가오는 일정이 아직 없어.</div>';
+  </div>`).join(''):'<div class="empty">이 날짜에는 등록된 일정이 없어.</div>';
 
 }
 
 window.toggleEventForm=()=>{
 
-  $('eventForm').classList.toggle('hidden');
+ $('eventForm').classList.toggle('hidden');
 
-  $('eventTitle').focus();
+ if(!$('eventForm').classList.contains('hidden'))$('eventTitle').focus();
 
 };
 
 window.saveEvent=async()=>{
 
-  const title=$('eventTitle').value.trim();
+ const title=$('eventTitle').value.trim();
 
-  if(!title)return alert('일정 이름을 적어줘.');
+ if(!title)return alert('일정 이름을 적어줘.');
 
-  try{
+ try{
 
-    await addDoc(collection(db,'couples',coupleId,'events'),{
+  await addDoc(collection(db,'couples',coupleId,'events'),{
 
-      title,
+   title,date:selectedDate,time:$('eventTime').value,
 
-      date:selectedDate,
+   place:$('eventPlace').value,memo:$('eventMemo').value,
 
-      time:$('eventTime').value,
+   createdAt:serverTimestamp(),createdBy:user.uid
 
-      place:$('eventPlace').value,
+  });
 
-      memo:$('eventMemo').value,
+  ['eventTitle','eventTime','eventPlace','eventMemo'].forEach(id=>$(id).value='');
 
-      createdAt:serverTimestamp(),
+  $('eventForm').classList.add('hidden');
 
-      createdBy:user.uid
-
-    });
-
-    ['eventTitle','eventTime','eventPlace','eventMemo']
-
-      .forEach(id=>$(id).value='');
-
-    $('eventForm').classList.add('hidden');
-
-  }catch(e){
-
-    alert('저장 실패: '+e.message);
-
-  }
+ }catch(e){alert('저장 실패: '+e.message)}
 
 };
 
 window.editEvent=async id=>{
 
-  if(!isOwner)return;
+ if(!isOwner)return;
 
-  const e=(window.eventsData||[]).find(x=>x.id===id);
+ const e=(window.eventsData||[]).find(x=>x.id===id);
 
-  if(!e)return;
+ if(!e)return;
 
-  const title=prompt('일정 이름',e.title||'');
+ const title=prompt('일정 이름',e.title||'');if(title===null)return;
 
-  if(title===null)return;
+ const time=prompt('시간',e.time||'');if(time===null)return;
 
-  const time=prompt('시간',e.time||'');
+ const place=prompt('장소',e.place||'');if(place===null)return;
 
-  if(time===null)return;
+ const memo=prompt('메모',e.memo||'');if(memo===null)return;
 
-  const place=prompt('장소',e.place||'');
+ try{
 
-  if(place===null)return;
+  await updateDoc(doc(db,'couples',coupleId,'events',id),{
 
-  const memo=prompt('메모',e.memo||'');
+   title:title.trim(),time,place,memo
 
-  if(memo===null)return;
+  });
 
-  try{
-
-    await updateDoc(doc(db,'couples',coupleId,'events',id),{
-
-      title:title.trim(),time,place,memo
-
-    });
-
-  }catch(e){
-
-    alert('수정 실패: '+e.message);
-
-  }
+ }catch(err){alert('수정 실패: '+err.message)}
 
 };
 
 window.addLetter=async()=>{
 
-  const title=$('letterTitle').value.trim();
+ const title=$('letterTitle').value.trim(),body=$('letterBody').value.trim();
 
-  const body=$('letterBody').value.trim();
+ if(!title||!body)return alert('제목과 내용을 적어줘.');
 
-  if(!title||!body)return alert('제목과 내용을 적어줘.');
+ try{
 
-  try{
+  await addDoc(collection(db,'couples',coupleId,'letters'),{
 
-    await addDoc(collection(db,'couples',coupleId,'letters'),{
+   title,body,createdAt:serverTimestamp(),createdBy:user.uid
 
-      title,body,
+  });
 
-      createdAt:serverTimestamp(),
+  $('letterTitle').value='';$('letterBody').value='';
 
-      createdBy:user.uid
-
-    });
-
-    $('letterTitle').value='';
-
-    $('letterBody').value='';
-
-  }catch(e){
-
-    alert('저장 실패: '+e.message);
-
-  }
+ }catch(e){alert('저장 실패: '+e.message)}
 
 };
 
 function renderLetters(){
 
-  const a=window.lettersData||[];
+ const a=window.lettersData||[];
 
-  $('letterList').innerHTML=a.length
+ $('letterList').innerHTML=a.length?a.map(l=>`
 
-    ?a.map(l=>`
+  <button class="envelope" onclick="openLetter('${l.id}')">
 
-      <button class="envelope" onclick="openLetter('${l.id}')">
+   <span class="seal">♥</span><b>${esc(l.title||'한 통의 편지')}</b>
 
-        <span class="seal">♥</span>
+   <small>${esc(l.createdBy===user.uid?'내가 쓴 편지':'우리에게 온 편지')}</small>
 
-        <b>${esc(l.title||'한 통의 편지')}</b>
-
-        <small>${esc(l.createdBy===user.uid?'내가 쓴 편지':'우리에게 온 편지')}</small>
-
-      </button>
-
-    `).join('')
-
-    :'<div class="empty" style="grid-column:1/-1">아직 편지가 없어. 첫 편지를 남겨봐 ♡</div>';
+  </button>`).join(''):'<div class="empty" style="grid-column:1/-1">아직 편지가 없어. 첫 편지를 남겨봐 ♡</div>';
 
 }
 
 window.openLetter=id=>{
 
-  const l=(window.lettersData||[]).find(x=>x.id===id);
+ const l=(window.lettersData||[]).find(x=>x.id===id);
 
-  if(!l)return;
+ if(!l)return;
 
-  $('letterPaper').innerHTML=`
+ $('letterPaper').innerHTML=`
 
-    <h3>${esc(l.title)}</h3>
+  <h3>${esc(l.title)}</h3>
 
-    <div class="date">
+  <div class="date">${l.createdAt?.toDate?l.createdAt.toDate().toLocaleDateString('ko-KR'):'방금 전'} · ${esc(l.createdBy===user.uid?'내가 쓴 편지':'상대가 쓴 편지')}</div>
 
-      ${l.createdAt?.toDate
+  <p>${esc(l.body)}</p>
 
-        ?l.createdAt.toDate().toLocaleDateString('ko-KR')
+  ${isOwner?`<button class="secondary" onclick="editLetter('${l.id}')">편지 수정</button><button class="secondary danger" onclick="delItem('letters','${l.id}')">편지 삭제</button>`:''}
 
-        :'방금 전'}
+ `;
 
-      · ${esc(l.createdBy===user.uid?'내가 쓴 편지':'상대가 쓴 편지')}
+ $('letterOverlay').classList.add('show');
 
-    </div>
-
-    <p>${esc(l.body)}</p>
-
-    ${isOwner?`
-
-      <div style="margin-top:15px">
-
-        <button class="secondary" onclick="editLetter('${l.id}')">편지 수정</button>
-
-        <button class="secondary danger" onclick="delItem('letters','${l.id}')">편지 삭제</button>
-
-      </div>
-
-    `:''}
-
-  `;
-
-  $('letterOverlay').classList.add('show');
-
-  setTimeout(()=>$('letterOverlay').classList.add('open'),50);
+ setTimeout(()=>$('letterOverlay').classList.add('open'),50);
 
 };
 
 window.closeLetter=()=>{
 
-  $('letterOverlay').classList.remove('open');
+ $('letterOverlay').classList.remove('open');
 
-  setTimeout(()=>$('letterOverlay').classList.remove('show'),500);
+ setTimeout(()=>$('letterOverlay').classList.remove('show'),500);
 
 };
 
 window.editLetter=async id=>{
 
-  if(!isOwner)return;
+ if(!isOwner)return;
 
-  const l=(window.lettersData||[]).find(x=>x.id===id);
+ const l=(window.lettersData||[]).find(x=>x.id===id);if(!l)return;
 
-  if(!l)return;
+ const title=prompt('편지 제목',l.title||'');if(title===null)return;
 
-  const title=prompt('편지 제목',l.title||'');
+ const body=prompt('편지 내용',l.body||'');if(body===null)return;
 
-  if(title===null)return;
+ try{await updateDoc(doc(db,'couples',coupleId,'letters',id),{title,body})}
 
-  const body=prompt('편지 내용',l.body||'');
-
-  if(body===null)return;
-
-  try{
-
-    await updateDoc(doc(db,'couples',coupleId,'letters',id),{
-
-      title,body
-
-    });
-
-  }catch(e){
-
-    alert('수정 실패: '+e.message);
-
-  }
+ catch(e){alert('수정 실패: '+e.message)}
 
 };
 
 window.addDrawItem=async()=>{
 
-  if(!isOwner)return;
+ if(!isOwner)return;
 
-  const title=$('newDrawItem').value.trim();
+ const title=$('newDrawItem').value.trim();if(!title)return;
 
-  if(!title)return;
+ try{
 
-  try{
+  await addDoc(collection(db,'couples',coupleId,'drawItems'),{
 
-    await addDoc(collection(db,'couples',coupleId,'drawItems'),{
+   title,createdAt:serverTimestamp(),createdBy:user.uid
 
-      title,
+  });
 
-      createdAt:serverTimestamp(),
+  $('newDrawItem').value='';
 
-      createdBy:user.uid
-
-    });
-
-    $('newDrawItem').value='';
-
-  }catch(e){
-
-    alert('저장 실패: '+e.message);
-
-  }
+ }catch(e){alert('저장 실패: '+e.message)}
 
 };
 
 function renderDraw(){
 
-  const a=window.drawItemsData||[];
+ const a=window.drawItemsData||[];
 
-  $('drawItems').innerHTML=a.length
+ $('drawItems').innerHTML=a.length?a.map(x=>`
 
-    ?a.map(x=>`
+  <div class="listitem">${esc(x.title)}
 
-      <div class="listitem">
+   ${isOwner?`<button class="secondary danger" onclick="delItem('drawItems','${x.id}')">삭제</button>`:''}
 
-        ${esc(x.title)}
-
-        ${isOwner?`
-
-          <button class="secondary danger" onclick="delItem('drawItems','${x.id}')">삭제</button>
-
-        `:''}
-
-      </div>
-
-    `).join('')
-
-    :'<div class="empty">뽑기 항목이 아직 없어.</div>';
+  </div>`).join(''):'<div class="empty">뽑기 항목이 아직 없어.</div>';
 
 }
 
 window.drawOne=()=>{
 
-  const a=window.drawItemsData||[];
+ const a=window.drawItemsData||[];
 
-  if(!a.length)return alert('뽑기 항목이 아직 없어.');
+ if(!a.length)return alert('뽑기 항목이 아직 없어.');
 
-  $('globe').classList.add('spinning');
+ $('globe').classList.add('spinning');
 
-  $('drawButton').disabled=true;
+ $('drawButton').disabled=true;$('drawResult').textContent='두근두근…';
 
-  $('drawResult').textContent='두근두근…';
+ setTimeout(()=>{
 
-  setTimeout(()=>{
+  const chosen=a[Math.floor(Math.random()*a.length)];
 
-    const chosen=a[Math.floor(Math.random()*a.length)];
+  $('globe').classList.remove('spinning');
 
-    $('globe').classList.remove('spinning');
+  $('drawButton').disabled=false;
 
-    $('drawButton').disabled=false;
+  $('drawResult').textContent='💗 '+chosen.title;
 
-    $('drawResult').textContent='♡ '+chosen.title;
-
-  },1400);
+ },1400);
 
 };
 
 window.delItem=async(col,id)=>{
 
-  if(col==='drawItems'&&!isOwner)return;
+ if(!isOwner)return;
 
-  if((col==='events'||col==='letters')&&!isOwner)return;
+ if(!confirm('삭제할까?'))return;
 
-  if(!confirm('삭제할까?'))return;
+ try{
 
-  try{
+  await deleteDoc(doc(db,'couples',coupleId,col,id));
 
-    await deleteDoc(doc(db,'couples',coupleId,col,id));
+  if(col==='letters')closeLetter();
 
-    if(col==='letters')closeLetter();
-
-  }catch(e){
-
-    alert('삭제 실패: '+e.message);
-
-  }
+ }catch(e){alert('삭제 실패: '+e.message)}
 
 };
 
 window.copyInvite=async()=>{
 
-  const t=$('inviteCodeView').textContent;
+ const t=$('inviteCodeView').textContent;
 
-  try{
+ try{await navigator.clipboard.writeText(t);alert('초대 코드를 복사했어!')}
 
-    await navigator.clipboard.writeText(t);
-
-    alert('초대 코드를 복사했어!');
-
-  }catch(e){
-
-    alert('초대 코드: '+t);
-
-  }
+ catch(e){alert('초대 코드: '+t)}
 
 };
 
 window.logout=async()=>{
 
-  cleanSubs();
-
-  await signOut(auth);
-
-  location.reload();
+ cleanSubs();await signOut(auth);location.reload();
 
 };
 
 function esc(s){
 
-  return String(s??'').replace(/[&<>"']/g,c=>({
+ return String(s??'').replace(/[&<>"']/g,c=>({
 
-    '&':'&amp;',
+  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
 
-    '<':'&lt;',
-
-    '>':'&gt;',
-
-    '"':'&quot;',
-
-    "'":'&#39;'
-
-  }[c]));
+ }[c]));
 
 }
 
