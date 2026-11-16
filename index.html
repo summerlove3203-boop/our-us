@@ -702,11 +702,13 @@ import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-ap
 import{
  getAuth,onAuthStateChanged,signOut,setPersistence,browserLocalPersistence,
  createUserWithEmailAndPassword,signInWithEmailAndPassword
-}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.
 import{
- getFirestore,doc,getDoc,setDoc,updateDoc,collection,
- addDoc,deleteDoc,onSnapshot,query,orderBy,serverTimestamp
-}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+ getAuth,onAuthStateChanged,signOut,setPersistence,browserLocalPersistence,
+ createUserWithEmailAndPassword,signInWithEmailAndPassword,
+ GoogleAuthProvider,signInWithRedirect,getRedirectResult
+}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+
 
 window.__ready=true;
 
@@ -773,8 +775,23 @@ async function doAuth(mode){
   $('loginBtn').disabled=false;$('signupBtn').disabled=false;
  }
 }
-$('loginBtn').onclick=()=>doAuth('login');
-$('signupBtn').onclick=()=>doAuth('signup');
+const googleProvider=new GoogleAuthProvider();
+
+$('googleLoginBtn').onclick=async()=>{
+ try{
+  $('googleLoginBtn').disabled=true;
+  status('Google 로그인으로 연결하는 중이야…');
+  await setPersistence(auth,browserLocalPersistence);
+  await signInWithRedirect(auth,googleProvider);
+ }catch(e){
+  $('googleLoginBtn').disabled=false;
+  status('Google 로그인 오류: '+authMsg(e));
+ }
+};
+
+getRedirectResult(auth).catch(e=>{
+ status('Google 로그인 오류: '+authMsg(e));
+});
 $('authPw').addEventListener('keydown',e=>{if(e.key==='Enter')doAuth('login')});
 
 onAuthStateChanged(auth,async u=>{
