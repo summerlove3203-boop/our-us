@@ -1342,7 +1342,7 @@ import{
 
  getFirestore,doc,collection,query,orderBy,onSnapshot,getDoc,setDoc,
 
- updateDoc,addDoc,deleteDoc,serverTimestamp
+ updateDoc,addDoc,deleteDoc,serverTimestamp,arrayunion
 
 }from'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
@@ -1636,33 +1636,32 @@ $('createPairBtn').onclick=async()=>{
 
 };
 
-$('joinPairBtn').onclick=async()=>{
+$$('joinPairBtn').onclick=async()=>{
+  const code=$('joinCode').value.trim().toUpperCase();
+  if(!code)return status('초대 코드를 입력해줘.');
 
- const code=$('joinCode').value.trim().toUpperCase();
+  try{
+    const inv=await getDoc(doc(db,'invites',code));
+    if(!inv.exists())throw Error('초대 코드를 찾을 수 없어.');
 
- if(!code)return status('초대 코드를 입력해줘.');
+    const id=inv.data().coupleId;
+    const cr=doc(db,'couples',id);
 
- try{
+    await updateDoc(cr,{members:arrayUnion(user.uid)});
 
-  const inv=await getDoc(doc(db,'invites',code));
+    await setDoc(doc(db,'users',user.uid),{
+      coupleId:id,
+      email:user.email||'',
+      displayName:user.displayName||''
+    },{merge:true});
 
-  if(!inv.exists())throw Error('초대 코드를 찾을 수 없어.');
+    coupleId=id;
+    await enterCouple(id);
 
-  const id=inv.data().coupleId;
-
-  const cr=doc(db,'couples',id);
-
-  const cs=await getDoc(cr);
-
-  if(!cs.exists())throw Error('공간이 존재하지 않아.');
-
-  const members=cs.data().members||[];
-
-  if(members.length>=2&&!members.includes(user.uid)){
-
-   throw Error('이미 두 사람이 연결된 공간이야.');
-
+  }catch(e){
+    status('연결 실패: '+e.message);
   }
+};
 
   if(!members.includes(user.uid)){
 
