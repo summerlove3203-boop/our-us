@@ -663,9 +663,10 @@ setTimeout(function(){
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import{
- getAuth,onAuthStateChanged,signOut,setPersistence,browserLocalPersistence,
+ initializeAuth,onAuthStateChanged,signOut,browserLocalPersistence,
+ indexedDBLocalPersistence,browserPopupRedirectResolver,
  createUserWithEmailAndPassword,signInWithEmailAndPassword,
- GoogleAuthProvider,signInWithRedirect,getRedirectResult
+ GoogleAuthProvider,signInWithPopup,signInWithRedirect,getRedirectResult
 }from'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import{
  getFirestore,doc,collection,query,orderBy,onSnapshot,getDoc,setDoc,
@@ -681,7 +682,12 @@ const firebaseConfig={
  appId:"1:15654738518:web:c5994a47036a010f0af9f7"
 };
 const app=initializeApp(firebaseConfig);
-const auth=getAuth(app),db=getFirestore(app);
+/* 로그인 저장소: IndexedDB 우선, localStorage 보조 (홈 화면 앱 재실행 시 로그인 복원) */
+const auth=initializeAuth(app,{
+ persistence:[indexedDBLocalPersistence,browserLocalPersistence],
+ popupRedirectResolver:browserPopupRedirectResolver
+});
+const db=getFirestore(app);
 let user=null,coupleId=null,isOwner=false,unsubs=[];
 let month=new Date(new Date().getFullYear(),new Date().getMonth(),1);
 let selectedDate=iso(new Date());
@@ -712,55 +718,91 @@ function authMsg(e){
   'auth/unauthorized-domain':'Firebase 인증 설정의 승인된 도메인에 현재 사이트 주소를 추가해야 해.',
   'auth/popup-closed-by-user':'Google 로그인 창이 닫혔어. 다시 시도해줘.',
   'auth/cancelled-popup-request':'로그인 요청이 취소됐어. 다시 시도해줘.',
+  'auth/popup-blocked':'로그인 창이 차단됐어. 다시 시도해줘.',
+  'auth/web-storage-unsupported':'이 환경에서는 로그인 정보를 저장할 수 없어. 브라우저 설정을 확인해줘.',
+  'auth/operation-not-supported-in-this-environment':'이 환경에서는 해당 로그인 방식을 쓸 수 없어.',
   'auth/redirect-cancelled-by-user':'Google 로그인이 취소됐어. 다시 시도해줘.',
   'auth/redirect-operation-pending':'Google 로그인이 이미 진행 중이야.'
  };
  return m[e.code]||('오류('+(e.code||'')+'): '+e.message);
+}
+function setAuthButtons(disabled){
+ $('loginBtn').disabled=disabled;
+ $('signupBtn').disabled=disabled;
+ $('googleLoginBtn').disabled=disabled;
 }
 async function doAuth(mode){
  const email=$('authEmail').value.trim();
  const pw=$('authPw').value;
  if(!email)return status('이메일을 입력해줘.');
  if(!pw)return status('비밀번호를 입력해줘.');
- $('loginBtn').disabled=true;$('signupBtn').disabled=true;
- $('googleLoginBtn').disabled=true;
+ setAuthButtons(true);
  status(mode==='signup'?'가입하는 중이야…':'로그인하는 중이야…');
  try{
-  await setPersistence(auth,browserLocalPersistence);
   if(mode==='signup')await createUserWithEmailAndPassword(auth,email,pw);
   else await signInWithEmailAndPassword(auth,email,pw);
  }catch(e){
   status(authMsg(e));
  }finally{
-  $('loginBtn').disabled=false;$('signupBtn').disabled=false;
-  $('googleLoginBtn').disabled=false;
+  setAuthButtons(false);
  }
 }
 const googleProvider=new GoogleAuthProvider();
-$('googleLoginBtn').onclick=async()=>{
- try{
-  $('googleLoginBtn').disabled=true;
-  $('loginBtn').disabled=true;
-  $('signupBtn').disabled=true;
-  status('Google 로그인으로 연결하는 중이야…');
-  await setPersistence(auth,browserLocalPersistence);
-  await signInWithRedirect(auth,googleProvider);
- }catch(e){
-  $('googleLoginBtn').disabled=false;
-  $('loginBtn').disabled=false;
-  $('signupBtn').disabled=false;
-  status('Google 로그인 오류: '+authMsg(e));
+googleProvider.setCustomParameters({prompt:'select_account'});
+/* 홈 화면에 추가된 앱(PWA) 여부 */
+const isStandalone=(window.navigator.standalone===true)||
+ (window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches);
+const PENDING_KEY='ourus-google-pending';
+let pendingRedirect=false;
+try{pendingRedirect=localStorage.getItem(PENDING_KEY)==='1'}catch(e){}
+let redirectErrMsg='';
+let googleFailed=false;
+function startGoogleRedirect(){
+ try{localStorage.setItem(PENDING_KEY,'1')}catch(e){}
+ status('Google 로그인 화면으로 이동하는 중이야…');
+ return signInWithRedirect(auth,googleProvider);
+}
+/* 클릭 직후 바로 팝업을 열어야 iOS/Safari에서 차단되지 않음 (그 앞에 await 금지) */
+$('googleLoginBtn').onclick=()=>{
+ setAuthButtons(true);
+ if(googleFailed){
+  startGoogleRedirect().catch(e=>{
+   setAuthButtons(false);
+   status('Google 로그인 오류: '+authMsg(e));
+  });
+  return;
  }
+ status('Google 로그인으로 연결하는 중이야…');
+ signInWithPopup(auth,googleProvider).then(()=>{
+  status('Google 로그인 완료! 우리 공간을 확인하고 있어.');
+ }).catch(e=>{
+  const fallback=[
+   'auth/popup-blocked',
+   'auth/operation-not-supported-in-this-environment',
+   'auth/web-storage-unsupported'
+  ];
+  if(fallback.indexOf(e.code)>=0){
+   startGoogleRedirect().catch(err=>{
+    setAuthButtons(false);
+    status('Google 로그인 오류: '+authMsg(err));
+   });
+   return;
+  }
+  if(isStandalone)googleFailed=true;
+  setAuthButtons(false);
+  status('Google 로그인 오류: '+authMsg(e)+(isStandalone?' 한 번 더 누르면 다른 방식으로 시도할게.':''));
+ });
 };
-getRedirectResult(auth).then(result=>{
+/* redirect 방식으로 돌아왔을 때의 결과 처리 */
+const redirectDone=getRedirectResult(auth).then(result=>{
  if(result&&result.user){
   status('Google 로그인 완료! 우리 공간을 확인하고 있어.');
  }
 }).catch(e=>{
- status('Google 로그인 오류: '+authMsg(e));
- $('googleLoginBtn').disabled=false;
- $('loginBtn').disabled=false;
- $('signupBtn').disabled=false;
+ redirectErrMsg='Google 로그인 오류: '+authMsg(e);
+ setAuthButtons(false);
+}).then(()=>{
+ try{localStorage.removeItem(PENDING_KEY)}catch(e){}
 });
 $('loginBtn').onclick=()=>doAuth('login');
 $('signupBtn').onclick=()=>doAuth('signup');
@@ -768,12 +810,25 @@ $('authPw').addEventListener('keydown',e=>{if(e.key==='Enter')doAuth('login')});
 onAuthStateChanged(auth,async u=>{
  user=u;
  if(!u){
+  /* redirect 결과 처리가 끝날 때까지 기다린 뒤에 로그인 화면을 보여줌 */
+  await redirectDone;
+  if(auth.currentUser)return;
   $('authGate').classList.remove('hidden');
   $('pairSetup').classList.add('hidden');
   $('loginForm').classList.remove('hidden');
-  status('로그인이 필요해.');
+  setAuthButtons(false);
+  if(redirectErrMsg){
+   status(redirectErrMsg);
+   redirectErrMsg='';
+  }else if(pendingRedirect){
+   status('Google 로그인이 완료되지 않았어. 다시 시도하거나 이메일로 로그인해줘.');
+  }else{
+   status('로그인이 필요해.');
+  }
+  pendingRedirect=false;
   return;
  }
+ pendingRedirect=false;
  $('loginForm').classList.add('hidden');
  $('pairSetup').classList.remove('hidden');
  $('userInfo').textContent=u.displayName||u.email||'로그인됨';
