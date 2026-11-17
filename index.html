@@ -336,7 +336,6 @@ textarea{min-height:120px;resize:vertical;line-height:1.7}
         </svg>
         Google 계정으로 로그인
       </button>
-      <button class="auth-sub" id="signupBtn">처음이면 가입하기</button>
     </div>
     <div id="pairSetup" class="hidden">
       <div class="panel">
@@ -665,7 +664,7 @@ import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-ap
 import{
  initializeAuth,onAuthStateChanged,signOut,browserLocalPersistence,
  indexedDBLocalPersistence,browserPopupRedirectResolver,
- createUserWithEmailAndPassword,signInWithEmailAndPassword,
+ signInWithEmailAndPassword,
  GoogleAuthProvider,signInWithPopup,signInWithRedirect,getRedirectResult
 }from'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import{
@@ -702,6 +701,31 @@ function cleanSubs(){
  unsubs.forEach(f=>f());
  unsubs=[];
 }
+/* ---------- 비공개 커플 앱: 허용 계정 검사 ---------- */
+const ALLOWED_UIDS=[
+ 'bGVBVL5OB9NnZRqZEnxvWZhvjH73',
+ 'EayP2hkc1Thf2CbWugbOnt60IjB2'
+];
+const BLOCK_MSG='이 계정은 OUR:US 이용 권한이 없어.';
+let blockedNotice='';
+function isAllowedUid(uid){
+ return typeof uid==='string'&&ALLOWED_UIDS.indexOf(uid)>=0;
+}
+function allowedNow(){
+ return !!(user&&isAllowedUid(user.uid));
+}
+/* 허용되지 않은 계정: 즉시 로그아웃하고 로그인 화면 + 안내 문구 표시 */
+async function blockAccount(){
+ blockedNotice=BLOCK_MSG;
+ user=null;coupleId=null;isOwner=false;
+ cleanSubs();
+ try{await signOut(auth)}catch(e){}
+ $('authGate').classList.remove('hidden');
+ $('pairSetup').classList.add('hidden');
+ $('loginForm').classList.remove('hidden');
+ setAuthButtons(false);
+ status(BLOCK_MSG);
+}
 /* ---------- 로그인 (이메일/비밀번호/Google) ---------- */
 function authMsg(e){
  const m={
@@ -709,8 +733,8 @@ function authMsg(e){
   'auth/missing-password':'비밀번호를 입력해줘.',
   'auth/weak-password':'비밀번호는 6자 이상이어야 해.',
   'auth/email-already-in-use':'이미 가입된 이메일이야. 「로그인」을 눌러줘.',
-  'auth/invalid-credential':'이메일 또는 비밀번호가 맞지 않아. 처음이면 「처음이면 가입하기」를 눌러줘.',
-  'auth/user-not-found':'가입된 이메일이 아니야. 「처음이면 가입하기」를 눌러줘.',
+  'auth/invalid-credential':'이메일 또는 비밀번호가 맞지 않아.',
+  'auth/user-not-found':'이메일 또는 비밀번호가 맞지 않아.',
   'auth/wrong-password':'비밀번호가 맞지 않아.',
   'auth/too-many-requests':'시도가 너무 많아. 잠시 후 다시 해줘.',
   'auth/network-request-failed':'네트워크 오류야. 연결을 확인해줘.',
@@ -728,19 +752,23 @@ function authMsg(e){
 }
 function setAuthButtons(disabled){
  $('loginBtn').disabled=disabled;
- $('signupBtn').disabled=disabled;
  $('googleLoginBtn').disabled=disabled;
 }
-async function doAuth(mode){
+async function doAuth(){
  const email=$('authEmail').value.trim();
  const pw=$('authPw').value;
  if(!email)return status('이메일을 입력해줘.');
  if(!pw)return status('비밀번호를 입력해줘.');
+ blockedNotice='';
  setAuthButtons(true);
- status(mode==='signup'?'가입하는 중이야…':'로그인하는 중이야…');
+ status('로그인하는 중이야…');
  try{
-  if(mode==='signup')await createUserWithEmailAndPassword(auth,email,pw);
-  else await signInWithEmailAndPassword(auth,email,pw);
+  const cred=await signInWithEmailAndPassword(auth,email,pw);
+  /* 로그인 직후 검사 */
+  if(!cred.user||!isAllowedUid(cred.user.uid)){
+   await blockAccount();
+   return;
+  }
  }catch(e){
   status(authMsg(e));
  }finally{
@@ -764,6 +792,7 @@ function startGoogleRedirect(){
 }
 /* 클릭 직후 바로 팝업을 열어야 iOS/Safari에서 차단되지 않음 (그 앞에 await 금지) */
 $('googleLoginBtn').onclick=()=>{
+ blockedNotice='';
  setAuthButtons(true);
  if(googleFailed){
   startGoogleRedirect().catch(e=>{
@@ -773,7 +802,12 @@ $('googleLoginBtn').onclick=()=>{
   return;
  }
  status('Google 로그인으로 연결하는 중이야…');
- signInWithPopup(auth,googleProvider).then(()=>{
+ signInWithPopup(auth,googleProvider).then(async result=>{
+  /* 로그인 직후 검사 */
+  if(!result||!result.user||!isAllowedUid(result.user.uid)){
+   await blockAccount();
+   return;
+  }
   status('Google 로그인 완료! 우리 공간을 확인하고 있어.');
  }).catch(e=>{
   const fallback=[
@@ -794,8 +828,13 @@ $('googleLoginBtn').onclick=()=>{
  });
 };
 /* redirect 방식으로 돌아왔을 때의 결과 처리 */
-const redirectDone=getRedirectResult(auth).then(result=>{
+const redirectDone=getRedirectResult(auth).then(async result=>{
  if(result&&result.user){
+  /* 로그인 직후 검사 */
+  if(!isAllowedUid(result.user.uid)){
+   await blockAccount();
+   return;
+  }
   status('Google 로그인 완료! 우리 공간을 확인하고 있어.');
  }
 }).catch(e=>{
@@ -804,10 +843,14 @@ const redirectDone=getRedirectResult(auth).then(result=>{
 }).then(()=>{
  try{localStorage.removeItem(PENDING_KEY)}catch(e){}
 });
-$('loginBtn').onclick=()=>doAuth('login');
-$('signupBtn').onclick=()=>doAuth('signup');
-$('authPw').addEventListener('keydown',e=>{if(e.key==='Enter')doAuth('login')});
+$('loginBtn').onclick=()=>doAuth();
+$('authPw').addEventListener('keydown',e=>{if(e.key==='Enter')doAuth()});
 onAuthStateChanged(auth,async u=>{
+ /* 앱 진입 전 가장 먼저 UID 검사: 허용 계정이 아니면 어떤 데이터도 읽지 않고 로그아웃 */
+ if(u&&!isAllowedUid(u.uid)){
+  await blockAccount();
+  return;
+ }
  user=u;
  if(!u){
   /* redirect 결과 처리가 끝날 때까지 기다린 뒤에 로그인 화면을 보여줌 */
@@ -817,7 +860,9 @@ onAuthStateChanged(auth,async u=>{
   $('pairSetup').classList.add('hidden');
   $('loginForm').classList.remove('hidden');
   setAuthButtons(false);
-  if(redirectErrMsg){
+  if(blockedNotice){
+   status(blockedNotice);
+  }else if(redirectErrMsg){
    status(redirectErrMsg);
    redirectErrMsg='';
   }else if(pendingRedirect){
@@ -829,6 +874,7 @@ onAuthStateChanged(auth,async u=>{
   return;
  }
  pendingRedirect=false;
+ blockedNotice='';
  $('loginForm').classList.add('hidden');
  $('pairSetup').classList.remove('hidden');
  $('userInfo').textContent=u.displayName||u.email||'로그인됨';
@@ -847,6 +893,7 @@ onAuthStateChanged(auth,async u=>{
  }
 });
 $('createPairBtn').onclick=async()=>{
+ if(!allowedNow()){await blockAccount();return;}
  try{
   const code=makeCode();
   const ref=doc(collection(db,'couples'));
@@ -872,6 +919,7 @@ $('createPairBtn').onclick=async()=>{
  }
 };
 $('joinPairBtn').onclick=async()=>{
+ if(!allowedNow()){await blockAccount();return;}
  const code=$('joinCode').value.trim().toUpperCase();
  if(!code)return status('초대 코드를 입력해줘.');
  try{
@@ -899,6 +947,11 @@ function makeCode(){
  ).join('');
 }
 async function enterCouple(id){
+ /* 앱 진입 직전 검사 */
+ if(!allowedNow()){
+  await blockAccount();
+  return;
+ }
  const c=await getDoc(doc(db,'couples',id));
  if(!c.exists())throw Error('커플 공간을 찾을 수 없어.');
  const data=c.data();
