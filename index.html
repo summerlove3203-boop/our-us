@@ -205,8 +205,8 @@ textarea{min-height:120px;resize:vertical;line-height:1.7}
 .lrow .lic svg.ic{width:20px;height:20px}
 .lbody{flex:1;min-width:0}
 .ltop{display:flex;align-items:center;gap:6px}
-.ltop b{font-size:16px;font-weight:600}
-.ltop em{margin-left:auto;font-style:normal;font-size:12px;color:var(--muted)}
+.ltop b{font-size:16px;font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ltop em{margin-left:auto;font-style:normal;font-size:12px;color:var(--muted);flex:none}
 .ldot{width:8px;height:8px;border-radius:50%;background:var(--rose);flex:none}
 .lprev{font-size:14px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .letter-overlay{
@@ -1093,6 +1093,7 @@ window.addLetter=async()=>{
   closeLetterComposer();
  }catch(e){alert('저장 실패: '+e.message)}
 };
+/* 목록에는 제목·보낸 사람·작성일만 표시 (본문/미리보기 노출 금지) */
 function renderLetters(){
  if(window.lettersData===undefined){
   $('letterList').innerHTML='<div class="lrow"><div class="skel" style="width:40px;height:40px;border-radius:50%"></div><div class="lbody"><div class="skel" style="width:45%"></div><div class="skel" style="width:75%;margin-top:10px"></div></div></div>'.repeat(3);
@@ -1102,18 +1103,19 @@ function renderLetters(){
  $('letterList').innerHTML=a.length?a.map(l=>{
   const mine=user&&l.createdBy===user.uid;
   const unread=!mine&&!readSet.has(l.id);
-  const date=l.createdAt?.toDate?l.createdAt.toDate().toLocaleDateString('ko-KR',{month:'numeric',day:'numeric'}):'방금';
-  const prev=((l.title||'')+' · '+(l.body||'')).replace(/\s+/g,' ');
+  const date=l.createdAt?.toDate?l.createdAt.toDate().toLocaleDateString('ko-KR',{year:'numeric',month:'numeric',day:'numeric'}):'방금';
+  const sender=mine?'나':'상대';
   return `
   <button class="lrow" onclick="openLetter('${l.id}')">
    <span class="lic"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg></span>
    <span class="lbody">
-    <span class="ltop"><b>${esc(mine?'내가 쓴 편지':'상대가 보낸 편지')}</b>${unread?'<i class="ldot"></i>':''}<em>${esc(date)}</em></span>
-    <div class="lprev">${esc(prev)}</div>
+    <span class="ltop"><b>${esc(l.title||'제목 없음')}</b>${unread?'<i class="ldot"></i>':''}<em>${esc(date)}</em></span>
+    <div class="lprev">${esc('보낸 사람 · '+sender)}</div>
    </span>
   </button>`;
  }).join(''):'<div class="empty">아직 편지가 없어요</div>';
 }
+/* 본문은 편지를 직접 눌렀을 때만 만들어짐 */
 window.openLetter=id=>{
  const l=(window.lettersData||[]).find(x=>x.id===id);
  if(!l)return;
@@ -1130,7 +1132,10 @@ window.openLetter=id=>{
 };
 window.closeLetter=()=>{
  $('letterOverlay').classList.remove('open');
- setTimeout(()=>$('letterOverlay').classList.remove('show'),500);
+ setTimeout(()=>{
+  $('letterOverlay').classList.remove('show');
+  if(!$('letterOverlay').classList.contains('open'))$('letterPaper').innerHTML='';
+ },500);
 };
 window.editLetter=async id=>{
  if(!isOwner)return;
